@@ -55,6 +55,10 @@ editan manualmente.
 | Rendimiento de relleno | attenuation radius, draw distance, fade range | Mantén el radio dentro de la sala y el draw distance cerca del tamaño real. |
 | Preview | `Preview Seed`, `Rebuild Preview` | Prueba una habitación sin generar toda la Dungeon. |
 
+Para una explicación práctica de cada grupo y valores iniciales para banners,
+antorchas y luz de relleno, lee [Ajustes de salas procedurales,
+explicados](../guides/04-procedural-room-settings.md).
+
 ## DungeonBlueprintForgeStraightCorridor
 
 Actor creado por el Generator, no se coloca normalmente a mano. `Build Corridor`

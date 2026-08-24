@@ -7,6 +7,7 @@ Esta carpeta está organizada por intención. Empieza por una guía; utiliza la 
 1. [Instalación y primera mazmorra](guides/01-installation-and-first-dungeon.md)
 2. [Implementación Blueprint paso a paso](guides/02-blueprint-implementation.md)
 3. [Crear salas prehechas y procedurales](guides/03-authoring-rooms.md)
+4. [Ajustes de salas procedurales, explicados](guides/04-procedural-room-settings.md)
 
 ## Referencia
 

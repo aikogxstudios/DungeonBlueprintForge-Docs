@@ -11,6 +11,7 @@ Plugin de Unreal Engine 5.4 para construir mazmorras modulares, reproducibles po
 | Instalarlo y comprobar que funciona | [Instalación y primera mazmorra](docs/guides/01-installation-and-first-dungeon.md) |
 | Conectarlo a un mapa mediante Blueprints | [Implementación Blueprint paso a paso](docs/guides/02-blueprint-implementation.md) |
 | Crear salas y contenido reutilizable | [Crear salas](docs/guides/03-authoring-rooms.md) |
+| Entender los ajustes de la sala procedural | [Ajustes de salas procedurales, explicados](docs/guides/04-procedural-room-settings.md) |
 | Entender cada Data Asset | [Referencia de Data Assets](docs/reference/data-assets.md) |
 | Configurar Generator, Room y componentes | [Referencia de Actors y componentes](docs/reference/actors-and-components.md) |
 | Preparar una versión para otra persona o para Fab | [Lista de liberación](docs/development/release-checklist.md) |
