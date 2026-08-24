@@ -74,6 +74,10 @@ son blandas para que las mallas descargadas sigan perteneciendo al juego host.
 | Options | `Enable Collision` | Usa la colisión simple del Static Mesh. |
 | Options | `Enable Physics Collision` | QueryAndPhysics; normalmente no hace falta para pasillos estáticos. |
 | Options | `Affect Navigation` | Incluye la geometría en NavMesh. Déjalo apagado mientras iteras el diseño. |
+| Corridor Lighting | `Enable Corridor Fill Lights`, color, intensidad, altura, spacing y rendimiento | Point Lights sin sombras generadas dentro del pasillo. Usa el límite máximo para controlar el coste. |
+| Door Frames | `Enable Door Frames`, mesh, overrides por slot, offsets, escala y colisión | Crea dos Actors de marco por pasillo aceptado. Cada slot de material conserva el original si su override está vacío. |
+
+Consulta [Iluminación y marcos de puerta en pasillos](../guides/05-corridor-lighting-and-door-frames.md) para valores iniciales y pruebas.
 
 ## Validación rápida de los tres Assets
 

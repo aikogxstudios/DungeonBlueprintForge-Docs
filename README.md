@@ -66,6 +66,7 @@ assigned from the Unreal Details panel.
 | Connect the Generator to your map using Blueprints | [Blueprint implementation, step by step](docs/guides/02-blueprint-implementation.md) |
 | Create a handcrafted or modular room | [Author rooms](docs/guides/03-authoring-rooms.md) |
 | Configure room size, decorations, banners, torches and fill light | [Procedural room settings, explained](docs/guides/04-procedural-room-settings.md) |
+| Light corridors and add multi-material door frames | [Corridor lighting and door frames](docs/guides/05-corridor-lighting-and-door-frames.md) |
 | Understand every Data Asset | [Data Asset reference](docs/reference/data-assets.md) |
 | Understand Generator, Room and Component options | [Actor and Component reference](docs/reference/actors-and-components.md) |
 
