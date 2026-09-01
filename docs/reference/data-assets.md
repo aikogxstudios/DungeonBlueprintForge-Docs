@@ -1,6 +1,6 @@
 # Referencia de Data Assets
 
-Los Data Assets separan reglas y contenido del código. Crea los tres desde el
+Los Data Assets separan reglas y contenido del código. Crea los cuatro desde el
 Content Browser con `Add > Miscellaneous > Data Asset`; asigna siempre arte y
 Blueprints de tu proyecto, no dentro de `Source/` del plugin.
 
@@ -39,6 +39,8 @@ progreso de una partida.
 |---|---|
 | `Generate Straight Corridors` | Activa la geometría visual del corredor. Requiere un Style válido. |
 | `Straight Corridor Style` | Data Asset visual de suelo, paredes, techo, alineación y colisión. |
+| `Generate Door Frames` | Coloca marcos cuando toda la topología está finalizada. Funciona con pasillos y `Direct Contact`. |
+| `Door Frame Style` | Data Asset independiente con el mesh y reglas visuales de todos los marcos. |
 | `Minimum Start To Key Graph Distance` | Mínimo de pasos lógicos desde Start antes de colocar Key. No es distancia en centímetros. |
 | `bDrawDebug` | Campo obsoleto conservado por compatibilidad; no cambia la generación actual. |
 
@@ -75,9 +77,23 @@ son blandas para que las mallas descargadas sigan perteneciendo al juego host.
 | Options | `Enable Physics Collision` | QueryAndPhysics; normalmente no hace falta para pasillos estáticos. |
 | Options | `Affect Navigation` | Incluye la geometría en NavMesh. Déjalo apagado mientras iteras el diseño. |
 | Corridor Lighting | `Enable Corridor Fill Lights`, color, intensidad, altura, spacing y rendimiento | Point Lights sin sombras generadas dentro del pasillo. Usa el límite máximo para controlar el coste. |
-| Door Frames | `Enable Door Frames`, mesh, overrides por slot, offsets, escala y colisión | Crea dos Actors de marco por pasillo aceptado. Cada slot de material conserva el original si su override está vacío. |
 
 Consulta [Iluminación y marcos de puerta en pasillos](../guides/05-corridor-lighting-and-door-frames.md) para valores iniciales y pruebas.
+
+## 4. Dungeon Blueprint Forge Door Frame Style
+
+Define el aspecto de todos los marcos de puerta de una mazmorra. Se asigna en
+`Door Frame Style` del `Generation Config`, no en el Corridor Style.
+
+| Campo | Qué hace |
+|---|---|
+| `Door Frame Mesh` | Mesh del marco; su pivote debe quedar centrado en la abertura. |
+| `Material Overrides Per Slot` | Sustituye solo los slots que rellenes; una entrada vacía conserva el material del mesh. |
+| `Rotation Offset` | Corrige un mesh que se haya creado con otro eje. Usa Yaw `180` únicamente si mira al revés. |
+| `Position Offset` | Corrección local fina desde el centro de la abertura. |
+| `Scale` | Tamaño final del mesh. Empieza en `1,1,1`. |
+| `Enable Frame Collision` | Hace que el marco bloquee al jugador solo si el mesh tiene colisión útil. |
+| `Frame Affects Navigation` | Actívalo únicamente si la colisión del marco cambia realmente el NavMesh. |
 
 ## Validación rápida de los tres Assets
 

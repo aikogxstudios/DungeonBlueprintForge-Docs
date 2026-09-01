@@ -1,8 +1,8 @@
 # Iluminación y marcos de puerta en pasillos
 
-Estas dos opciones se configuran en el mismo `Dungeon Blueprint Forge Corridor
-Style` Data Asset que ya usas para suelo, paredes y techo. Se aplican solo a
-pasillos que el Generator acepta durante una generación válida.
+La luz se configura en el `Dungeon Blueprint Forge Corridor Style` que ya usas
+para suelo, paredes y techo. Los marcos se configuran aparte, desde el
+`Generation Config`, para cubrir todas las puertas finales de la mazmorra.
 
 ## Luz procedural de pasillo
 
@@ -28,13 +28,17 @@ oscuro, aumenta primero `Intensity`; si una luz se ve demasiado baja, aumenta
 
 ## Marcos de puerta automáticos
 
-Activa `Enable Door Frames` en la categoría **Door Frames** y asigna un mesh en
-`Door Frame Mesh`. El Generator crea un `DungeonBlueprintForgeDoorFrame` en
-cada extremo de cada pasillo aceptado: uno en la salida de una sala y otro en
-la entrada de la siguiente.
+En tu `Generation Config`, activa `Generate Door Frames` y crea un Data Asset
+de clase `DungeonBlueprintForgeDoorFrameStyle`. Asígnalo en `Door Frame Style`.
 
-Los marcos no aparecen en conexiones descartadas, por lo que no verás un marco
-aislado en una puerta que no tenga pasillo.
+El Generator espera a que la topología completa esté terminada: primero cierra
+las conexiones no utilizadas y, como último paso, crea un
+`DungeonBlueprintForgeDoorFrame` en cada abertura utilizada. Esto incluye los
+dos extremos de un pasillo y las puertas de `Direct Contact`. Si dos rooms
+comparten el mismo hueco de contacto directo, se crea un único marco para evitar
+dos Actors superpuestos.
+
+No se crean marcos en conexiones descartadas o cerradas.
 
 | Ajuste | Uso |
 |---|---|
@@ -60,8 +64,28 @@ procedural.
 
 ## Prueba rápida
 
-1. Activa luces y marcos en tu Corridor Style.
-2. Asigna un mesh de marco con sus materiales ya configurados.
-3. Genera una seed fija.
-4. Comprueba un pasillo corto y otro largo.
-5. Si cambias offsets o escala, regenera la misma seed para comparar el cambio.
+1. Activa las luces en tu `Corridor Style` si las quieres usar.
+2. En el `Generation Config`, activa `Generate Door Frames`.
+3. Crea y asigna un `DungeonBlueprintForgeDoorFrameStyle` con su mesh y materiales.
+4. Genera una seed fija.
+5. Comprueba un pasillo corto, uno largo y una conexión `Direct Contact` si tu configuración la utiliza.
+6. Si cambias offsets o escala, regenera la misma seed para comparar el cambio.
+
+## Solución de problemas: Door Frame Style no se asigna
+
+El campo `Door Frame Style` **no acepta** el Actor
+`DungeonBlueprintForgeDoorFrame`. Debe recibir un Data Asset creado con la
+clase `DungeonBlueprintForgeDoorFrameStyle`.
+
+Si has creado el Data Asset correcto pero Unreal lo rechaza o el campo vuelve a
+quedar vacío, probablemente el `Generation Config` conserva una ruta antigua
+del asset. No borres el asset ni lo muevas desde el Explorador de Windows.
+
+1. Abre el `Generation Config` y usa la flecha de reset del campo `Door Frame Style`.
+2. Guarda el `Generation Config`.
+3. En el Content Browser, clic derecho sobre la carpeta que contiene los assets y usa `Fix Up Redirectors in Folder`.
+4. Vuelve a abrir el `Generation Config` y selecciona el `DungeonBlueprintForgeDoorFrameStyle` desde su carpeta actual.
+5. Guarda de nuevo y genera la misma seed para confirmar el resultado.
+
+Para reorganizar assets en el futuro, muévelos siempre desde el Content Browser
+de Unreal; así las referencias se actualizan de forma segura.
