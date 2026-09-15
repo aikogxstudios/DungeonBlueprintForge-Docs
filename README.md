@@ -4,7 +4,7 @@
 
 ![Unreal Engine 5.4](https://img.shields.io/badge/Unreal%20Engine-5.4-0E1128?logo=unrealengine&logoColor=white)
 ![Documentation](https://img.shields.io/badge/Repository-Documentation%20Only-5B3CC4)
-![Status](https://img.shields.io/badge/Status-Active%20Development-F59E0B)
+![Status](https://img.shields.io/badge/Status-0.10.1%20Checkpoint-2EA44F)
 
 **Dungeon Blueprint Forge** is a reusable Unreal Engine plugin for building
 modular, seed-based dungeons from Blueprints. It handles the technical layout:
@@ -34,12 +34,13 @@ debugging, sharing layouts and reproducing a player report much easier.
 - Supports handcrafted rooms and modular procedural rooms in `Rectangle`, `L`
   and `T` shapes.
 - Connects compatible doors with straight horizontal corridors.
+- Connects lower and upper floors with `DBF Stairwell Room`, using complete stair meshes and automatic low/high connections.
 - Validates room overlap and protects rooms from corridor invasions and
   corridor crossings.
 - Builds floor, walls, ceilings and repeated decorative geometry with HISM for
   efficient rendering.
-- Generates optional wall decorations, host-project torch Actors and one
-  shadowless room fill light.
+- Generates optional wall decorations, host-project torch and chest Actors,
+  shadowless fill lights, and generic `Gameplay Zone` metadata.
 - Exposes the generation flow through Blueprint-friendly Actors, Components,
   Data Assets and events.
 
@@ -63,10 +64,14 @@ assigned from the Unreal Details panel.
 | Your goal | Read this |
 |---|---|
 | Understand the complete first-use flow | [Installation and first dungeon](docs/guides/01-installation-and-first-dungeon.md) |
+| Return to the plugin or start a complete project | [Complete user workflow](docs/guides/00-complete-user-workflow.md) |
 | Connect the Generator to your map using Blueprints | [Blueprint implementation, step by step](docs/guides/02-blueprint-implementation.md) |
 | Create a handcrafted or modular room | [Author rooms](docs/guides/03-authoring-rooms.md) |
 | Configure room size, decorations, banners, torches and fill light | [Procedural room settings, explained](docs/guides/04-procedural-room-settings.md) |
 | Light corridors and add multi-material door frames | [Corridor lighting and door frames](docs/guides/05-corridor-lighting-and-door-frames.md) |
+| Add optional procedural chests | [Procedural chests](docs/guides/06-procedural-chests.md) |
+| Build upper and lower floors | [Stairwell room](docs/guides/09-procedural-stairwell.md) |
+| Connect host-project encounters | [Host enemy encounters](docs/guides/08-host-enemy-encounters-blueprints.md) |
 | Understand every Data Asset | [Data Asset reference](docs/reference/data-assets.md) |
 | Understand Generator, Room and Component options | [Actor and Component reference](docs/reference/actors-and-components.md) |
 
@@ -96,9 +101,11 @@ layout, then doors, then decoration, then lighting.
 
 ## Current scope
 
-Dungeon Blueprint Forge currently focuses on horizontal modular dungeons in
-Unreal Engine 5.4. Curved/L-shaped corridors, vertical generation, room loops
-and finished multiplayer replication are outside the current scope.
+Dungeon Blueprint Forge uses straight horizontal corridors. Vertical travel is
+handled inside `DBF Stairwell Room`; curved/L-shaped corridors and room loops
+are outside the current scope. The 0.10.1 checkpoint compiles in Unreal 5.4;
+large multi-floor visual, NavMesh and Lumen acceptance tests remain part of
+each project's own QA.
 
 ## Documentation repository only
 

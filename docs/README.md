@@ -4,11 +4,17 @@ Esta carpeta está organizada por intención. Empieza por una guía; utiliza la 
 
 ## Guías para usar el plugin
 
-1. [Instalación y primera mazmorra](guides/01-installation-and-first-dungeon.md)
-2. [Implementación Blueprint paso a paso](guides/02-blueprint-implementation.md)
-3. [Crear salas prehechas y procedurales](guides/03-authoring-rooms.md)
-4. [Ajustes de salas procedurales, explicados](guides/04-procedural-room-settings.md)
-5. [Iluminación y marcos de puerta en pasillos](guides/05-corridor-lighting-and-door-frames.md)
+1. [Recorrido completo de usuario](guides/00-complete-user-workflow.md)
+2. [Instalación y primera mazmorra](guides/01-installation-and-first-dungeon.md)
+3. [Implementación Blueprint paso a paso](guides/02-blueprint-implementation.md)
+4. [Crear salas prehechas y procedurales](guides/03-authoring-rooms.md)
+5. [Ajustes de salas procedurales, explicados](guides/04-procedural-room-settings.md)
+6. [Iluminación y marcos de puerta en pasillos](guides/05-corridor-lighting-and-door-frames.md)
+7. [Cofres procedurales](guides/06-procedural-chests.md)
+8. [Generación multijugador](guides/07-multiplayer-generation.md)
+9. [Encuentros de enemigos en Blueprints del proyecto host](guides/08-host-enemy-encounters-blueprints.md)
+10. [Sala Stairwell: subir una planta](guides/09-procedural-stairwell.md)
+11. [Diagnóstico y errores frecuentes](guides/10-troubleshooting.md)
 
 ## Referencia
 

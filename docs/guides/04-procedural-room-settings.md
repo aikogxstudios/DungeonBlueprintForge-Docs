@@ -9,7 +9,8 @@ las explicaciones indican qué tocar primero y qué puedes dejar por defecto.
 1. Define forma y tamaño en **01 Room Layout**.
 2. Asigna los tres meshes en **02 Surface Modules**.
 3. Configura las puertas en **04 Connections**.
-4. Pulsa **Rebuild Preview** y deja la sala base correcta antes de añadir props.
+4. Compila y guarda el Blueprint; genera una seed fija desde el Generator y
+   deja la sala base correcta antes de añadir props.
 5. Añade decoración, antorchas y luz de relleno al final.
 
 No hace falta cambiar todas las opciones: los valores por defecto están pensados
@@ -147,11 +148,12 @@ luz de apoyo, no sustituye el tono cálido de las antorchas.
 | `Local Offset` | X/Y la mueven desde el centro procedural; no cambia altura. |
 | Rendimiento | Atenuación dentro de sala y draw distance/fade para salas lejanas. |
 
-## 08 Preview
+## 08 Prueba con seed fija
 
-Asigna `Preview Seed` y pulsa `Rebuild Preview` para comprobar una sola sala
-antes de generar toda la mazmorra. Con seed fija puedes comparar: cambia un
-ajuste, reconstruye la misma seed y decide si mantenerlo.
+Este actor no expone un botón `Rebuild Preview`. Compila y guarda el Blueprint,
+asigna una `Preview Seed` al `DungeonBlueprintForgeGenerator` del nivel y pulsa
+`Generate Preview`. Con la misma seed puedes comparar: cambia un ajuste,
+regenera y decide si mantenerlo.
 
 ## Preset seguro inicial
 

@@ -55,6 +55,8 @@ apunten temporalmente al mismo Blueprint.
 | `Category` | Rol: Start, Normal, Hub, Reward, Key o Boss. Debe coincidir con la lista donde se añade. |
 | `Selection Weight` | Probabilidad relativa entre candidatas compatibles. `0` evita que se seleccione. |
 | `Enabled` | Activa/desactiva sin borrar el Asset. |
+| `Chest Spawn Style` | Reglas opcionales de cofres para esta variante. Vacío significa que no genera cofres. |
+| `Gameplay Zone` | Etiqueta `Safe`, `Combat`, `Special` o `MiniBoss`. Se copia al resultado y no crea enemigos. |
 
 Una Definition no crea geometría: solo define cómo puede participar un Blueprint
 de sala ya válido.
@@ -94,6 +96,22 @@ Define el aspecto de todos los marcos de puerta de una mazmorra. Se asigna en
 | `Scale` | Tamaño final del mesh. Empieza en `1,1,1`. |
 | `Enable Frame Collision` | Hace que el marco bloquee al jugador solo si el mesh tiene colisión útil. |
 | `Frame Affects Navigation` | Actívalo únicamente si la colisión del marco cambia realmente el NavMesh. |
+
+## 5. Dungeon Blueprint Forge Chest Spawn Style
+
+Este Asset usa un Blueprint Actor de cofre de tu proyecto. El plugin decide una
+posición segura junto a paredes interiores; tu Blueprint conserva inventario,
+interacción, arte y estado de abierto.
+
+| Campo | Uso |
+|---|---|
+| `Chest Actor Class` | Blueprint Actor que se crea. |
+| `Enable Chest Spawning` | Activa o desactiva el preset. |
+| `Base Chest Chance` | Probabilidad de que una Room reciba cofres. |
+| `Minimum/Maximum Chests` | Rango de cofres tras superar la probabilidad. |
+| `Wall Inset`, `Chest Clearance`, `Door Clearance` | Mantienen el cofre fuera de paredes, props, pilares y puertas. |
+| `Position/Rotation Offset`, `Scale` | Corrige pivote y orientación del asset. |
+| `Draw Chest Debug` | Dibuja diagnóstico temporal de puntos y descartes. |
 
 ## Validación rápida de los tres Assets
 

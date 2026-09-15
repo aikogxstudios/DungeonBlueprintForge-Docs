@@ -53,7 +53,7 @@ editan manualmente.
 | Rendimiento de antorcha | radius, max draw distance, fade range | Limita cuánta geometría afecta la luz. Menor radio es más barato. |
 | Luz de relleno | Enable, intensity, color, height below ceiling, local offset | Una Point Light sin sombras en el centro útil. Para **bajarla**, aumenta `Height Below Ceiling`; X/Y solo la desplazan lateralmente. |
 | Rendimiento de relleno | attenuation radius, draw distance, fade range | Mantén el radio dentro de la sala y el draw distance cerca del tamaño real. |
-| Preview | `Preview Seed`, `Rebuild Preview` | Prueba una habitación sin generar toda la Dungeon. |
+| Prueba | `Preview Seed` en el Generator y `Generate Preview` | Prueba una seed fija tras compilar y guardar la Room. |
 
 Para una explicación práctica de cada grupo y valores iniciales para banners,
 antorchas y luz de relleno, lee [Ajustes de salas procedurales,

@@ -11,6 +11,12 @@ El plugin añade Point Lights nativas sin sombras al propio Actor del pasillo:
 un pasillo corto recibe una luz centrada y uno largo recibe varias, con un límite
 máximo para mantener el rendimiento controlado.
 
+`Isolate Corridor Local Lights From Player` viene activado. Estas luces locales
+iluminan geometría generada en el canal 1; el personaje puede mantenerse en el
+canal 0 para evitar iluminación directa sobre su cabeza. Desactiva esa opción
+solo si quieres que el relleno del pasillo afecte también al personaje. Lumen
+indirecto y luces manuales externas deben revisarse visualmente en tu proyecto.
+
 | Ajuste | Valor inicial | Uso |
 |---|---:|---|
 | `Intensity` | `350 lm` | Brillo de la luz. Mantén el valor bajo para que las antorchas sigan destacando. |
