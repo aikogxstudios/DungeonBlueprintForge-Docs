@@ -33,6 +33,33 @@ progreso de una partida.
 | `Overlap Tolerance` | Margen pequeño que permite que límites solo se toquen. No es una herramienta para forzar salas que se solapan. Déjalo en 1 cm salvo ajuste muy justificado. |
 | `Connection Mode` | `Corridor` crea pasillo, `Direct Contact` une puertas sin pasillo y `Random` decide de forma reproducible por seed. |
 
+### Plantas adaptativas
+
+| Campo | Significado |
+|---|---|
+| `Generation Expansion Mode` | `Free Expansion` no limita XY; `Adaptive Floors` usa una huella por planta; `Automatic` cambia de modo según el umbral. |
+| `Automatic Adaptive Floor Threshold` | Con el valor predeterminado `40`, 40 o menos usa expansión libre y 41 o más usa Adaptive Floors. Solo se usa en `Automatic`. |
+| `Stairwell Room Definitions` | Definitions `Normal` de `DBF Stairwell Room` reservadas para cambiar de planta. |
+| `Default Footprint Size` | Anchura y profundidad en centímetros de la zona XY de cada planta. |
+| `Randomize Footprint Size` | Permite que la seed elija una huella entre `Minimum` y `Maximum Footprint Size`. |
+| `Adaptive Floor Direction` | `Up Only`, `Down Only` o `Either` para restringir la puerta vertical usada. |
+| `Maximum Adaptive Floor Transitions` | Salvaguarda técnica; no determina cuántas plantas debe crear el generador. |
+| `Draw Adaptive Floor Footprint` | Dibuja una caja verde con el alcance XY resuelto. No crea colisión. |
+| `Adaptive Floor Debug Half Height` / `Duration` | Altura visual y duración de la caja de depuración. |
+| `Maximum Generation Attempts` | Reinicios completos de layout por solicitud. Se limita a 1--32 y usa 20 por defecto; aumentarlo puede elevar tanto la tasa de éxito como el tiempo síncrono. |
+| `Maximum Local Backtrack Steps` | Normales recientes que el planificador puede retirar para liberar conexiones antes de reiniciar el layout. Usa 2 por defecto, admite 0--8 y restaura después el total solicitado. |
+| `Print Generation Retry Debug` | Muestra en pantalla los reintentos completos, su tiempo en milisegundos y los pasos de backtracking. Está desactivado por defecto. |
+| `Staged Generation Time Budget` | Presupuesto aproximado por frame para la presentación escalonada. Usa 6 ms por defecto. |
+| `Maximum Staged Items Per Frame` | Máximo de elementos de presentación construidos por frame. Usa 4 por defecto. |
+
+La altura real y el número de tramos pertenecen al actor Stairwell y a su
+`Stair Repeat Count`; el Config solo controla la selección procedural.
+
+El debug se dibuja una vez después del resultado final. `Last Result` conserva
+modo, huella y transiciones también en un fallo. Durante los reintentos, las
+Rooms modulares calculan primero su geometría lógica y construyen meshes,
+colisión, navegación, decoración y luces después de aceptar el layout.
+
 ### Corridors y Special Rooms
 
 | Campo | Significado |
@@ -51,15 +78,16 @@ apunten temporalmente al mismo Blueprint.
 
 | Campo | Significado |
 |---|---|
-| `Room Class` | Blueprint hijo de `DungeonBlueprintForgeRoomBase` o `DungeonBlueprintForgeModularRoom`. |
+| `Room Class` | Blueprint hijo de `DungeonBlueprintForgeRoomBase`, `DungeonBlueprintForgeModularRoom` o `DungeonBlueprintForgePackedRoom`. |
+| `Additional Preload Assets` | Referencias blandas opcionales que staged generation carga antes de presentar esta variante. |
 | `Category` | Rol: Start, Normal, Hub, Reward, Key o Boss. Debe coincidir con la lista donde se añade. |
 | `Selection Weight` | Probabilidad relativa entre candidatas compatibles. `0` evita que se seleccione. |
 | `Enabled` | Activa/desactiva sin borrar el Asset. |
 | `Chest Spawn Style` | Reglas opcionales de cofres para esta variante. Vacío significa que no genera cofres. |
 | `Gameplay Zone` | Etiqueta `Safe`, `Combat`, `Special` o `MiniBoss`. Se copia al resultado y no crea enemigos. |
 
-Una Definition no crea geometría: solo define cómo puede participar un Blueprint
-de sala ya válido.
+Consulta [Rooms prehechas con Packed Level Actor](../guides/12-prebuilt-packed-level-actor-rooms.md)
+para el actor contenedor, cajas, flechas y validación.
 
 ## 3. Dungeon Blueprint Forge Corridor Style
 

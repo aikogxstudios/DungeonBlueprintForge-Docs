@@ -5,10 +5,28 @@ publica ni hace push por sí sola.
 
 ## Código y calidad
 
-- [ ] Build `Editor Development` de UE 5.4 termina correctamente.
+- [x] Builds `DungeonLab54Editor` y `DungeonLab54` Win64 Development de UE 5.4 terminan correctamente tras la última corrección C++ (2026-09-27).
 - [ ] No hay warnings nuevos relevantes ni código temporal de depuración.
 - [ ] `git diff --check` pasa.
 - [ ] Todos los cambios funcionales tienen una prueba manual asociada.
+- [ ] Probar Rooms Packed nuevas con bounds, 2--4 salidas, puertas libres,
+  offsets y escala; repetir una seed fija.
+- [ ] Probar `Direct Contact` staged: un marco por abertura y limpieza tras
+  un fallo de presentación.
+- [x] Barrida visual del laboratorio completada de 5 a 70 Rooms (2026-09-19).
+- [ ] Repetir una seed fija después del build final de cleanup.
+- [ ] Validar `Free Expansion`, `Adaptive Floors` y `Automatic` con seeds fijas.
+- [ ] Confirmar huella XY, transición Stairwell, recorrido, colisión y NavMesh.
+- [ ] Confirmar que el debug de huella se puede activar y desactivar sin cambiar el layout.
+- [ ] Probar 55 normales con huella 12000x12000 y medir el tiempo de generación.
+- [ ] Confirmar que suelos y techos de plantas contiguas no se solapan.
+- [ ] Probar 65 normales y confirmar la reubicación de Hubs/Stairwell diferidos.
+- [ ] Probar 69 normales y confirmar el máximo de 75 Rooms totales.
+- [ ] Confirmar que la auditoría final rechaza cruces de pasillos e invasiones laterales.
+- [ ] Repetir una seed problemática con backtracking 0 y 2, y confirmar que 2 conserva el total de normales cuando recupera Hub o Key.
+- [ ] Registrar el tiempo mostrado por `Print Generation Retry Debug` y comprobar que el layout final conserva colisión, NavMesh y luces de pasillo.
+- [ ] Con `stat unit` y `stat gpu`, confirmar que un mensaje amarillo de backtracking no coincide con creación repetida de HISM de pasillo.
+- [ ] Registrar `Performance Stats`, especialmente `Planning`, `Room Build`, `Deferred Content` y `Slowest Staged Item`, en hardware objetivo.
 - [ ] Se registra la versión y los cambios visibles en `CHANGELOG.md`.
 
 ## Contenido y dependencias
@@ -28,6 +46,8 @@ publica ni hace push por sí sola.
 - [ ] Crear Config, Definition, Room y Generator siguiendo la guía sin usar
   Assets del laboratorio.
 - [ ] Generar una seed fija y una aleatoria; probar salas Rectangle, L y T.
+- [ ] Probar una Packed Room en una build empaquetada y confirmar que conserva
+  la huella precisa guardada en su Blueprint.
 
 ## Antes de GitHub/Fab
 

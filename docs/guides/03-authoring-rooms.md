@@ -12,8 +12,12 @@
    y un `Opening Size` con anchura y altura libres.
 5. Opcionalmente añade `DungeonBlueprintForgeMarkerComponent` (`PlayerSpawn`,
    `Chest`, etc.).
-6. En Class Defaults ajusta `Allowed Rotations` y pulsa **Validate Room And
-   Log** antes de crear el Room Definition.
+6. En Class Defaults ajusta `Allowed Rotations`. Coloca una instancia temporal
+   en un nivel y pulsa **Validate Room And Log** desde Details; lee Output Log
+   antes de crear el Room Definition.
+
+Si tu geometría ya es un Packed Level Actor, crea un hijo de
+`DungeonBlueprintForgePackedRoom` y sigue la [guía Packed](12-prebuilt-packed-level-actor-rooms.md).
 
 ## Sala procedural
 

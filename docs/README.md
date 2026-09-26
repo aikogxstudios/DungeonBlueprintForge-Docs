@@ -15,6 +15,20 @@ Esta carpeta está organizada por intención. Empieza por una guía; utiliza la 
 9. [Encuentros de enemigos en Blueprints del proyecto host](guides/08-host-enemy-encounters-blueprints.md)
 10. [Sala Stairwell: subir una planta](guides/09-procedural-stairwell.md)
 11. [Diagnóstico y errores frecuentes](guides/10-troubleshooting.md)
+12. [Generación staged y rendimiento](guides/11-staged-generation-and-performance.md)
+13. [Rooms prehechas con Packed Level Actor](guides/12-prebuilt-packed-level-actor-rooms.md)
+
+La guía Stairwell y la referencia de Data Assets incluyen el prototipo de
+`Adaptive Floors`, con límites XY por planta, selección dedicada de Stairwell,
+modo automático y debug visual. Está compilado en el checkpoint privado de
+desarrollo. También incluye preparación ligera de Rooms modulares y fallback de
+conexiones para layouts compactos. El laboratorio completó una barrida visual
+de 5 a 70 Rooms; NavMesh, red y hardware modesto siguen requiriendo
+pruebas dedicadas.
+
+Packed Rooms con `Automatic Bounds` y puertas de salidas libres ya se probaron
+visualmente en el laboratorio. El ajuste de escala/desplazamiento completo,
+las nuevas variantes y una build empaquetada aún necesitan prueba manual.
 
 ## Referencia
 
@@ -24,6 +38,7 @@ Esta carpeta está organizada por intención. Empieza por una guía; utiliza la 
 ## Desarrollo y publicación
 
 - [Lista de liberación](development/release-checklist.md)
+- [Estado de validación del 2026-09-26](development/validation-status-2026-09-26.md)
 
 ## Alcance público
 

@@ -16,6 +16,13 @@ This repository is the public documentation portal for the plugin. It is made
 for designers and Blueprint users who want to understand the workflow before
 using the private plugin build.
 
+**To use the plugin, obtain its authorized private build separately.** This
+repository contains guides and images, not an installable plugin. Start with
+[installation and your first dungeon](docs/guides/01-installation-and-first-dungeon.md);
+the [validation status](docs/development/validation-status-2026-09-26.md) lists
+features that still need testing before production use. The step-by-step guides
+are in Spanish.
+
 ## What problem does it solve?
 
 Building a different dungeon layout by hand for every play session is slow and
@@ -23,7 +30,7 @@ hard to maintain. Dungeon Blueprint Forge gives you a structured way to create
 reusable room Blueprints and let a deterministic seed assemble them into a
 repeatable dungeon.
 
-The same seed always produces the same valid result. That makes testing,
+The same seed and configuration reproduce the same result or failure. That makes testing,
 debugging, sharing layouts and reproducing a player report much easier.
 
 ## What the plugin does
@@ -35,6 +42,9 @@ debugging, sharing layouts and reproducing a player report much easier.
   and `T` shapes.
 - Connects compatible doors with straight horizontal corridors.
 - Connects lower and upper floors with `DBF Stairwell Room`, using complete stair meshes and automatic low/high connections.
+- Documents development modes `Free Expansion`, `Adaptive Floors` and
+  `Automatic`, with bounded XY footprints, deterministic size variation,
+  dedicated Stairwell Definitions and optional green footprint debugging.
 - Validates room overlap and protects rooms from corridor invasions and
   corridor crossings.
 - Builds floor, walls, ceilings and repeated decorative geometry with HISM for
@@ -72,8 +82,11 @@ assigned from the Unreal Details panel.
 | Add optional procedural chests | [Procedural chests](docs/guides/06-procedural-chests.md) |
 | Build upper and lower floors | [Stairwell room](docs/guides/09-procedural-stairwell.md) |
 | Connect host-project encounters | [Host enemy encounters](docs/guides/08-host-enemy-encounters-blueprints.md) |
+| Generate large dungeons across frames | [Staged generation and performance](docs/guides/11-staged-generation-and-performance.md) |
+| Use a Packed Level Actor as a room | [Packed rooms, automatic bounds and exit doors](docs/guides/12-prebuilt-packed-level-actor-rooms.md) |
 | Understand every Data Asset | [Data Asset reference](docs/reference/data-assets.md) |
 | Understand Generator, Room and Component options | [Actor and Component reference](docs/reference/actors-and-components.md) |
+| Check what has been validated | [Validation status](docs/development/validation-status-2026-09-26.md) |
 
 ## Main workflow
 
@@ -93,6 +106,11 @@ layout, then doors, then decoration, then lighting.
 
 - Repeated static room and decoration meshes use Hierarchical Instanced Static
   Meshes rather than one Actor per piece.
+- Modular rooms use lightweight logical preparation while a layout is being
+  searched. Mesh instances, collision, navigation, decoration and lights are
+  built once after the topology is accepted.
+- Staged generation can preload soft references, build Start first and spread
+  connected Rooms, corridors and deferred content across frames.
 - Generation is event-driven; the generated content does not depend on Tick.
 - Torch art belongs to the host project, so each game controls the number,
   light radius, draw distance and fade range it can afford.
@@ -103,9 +121,11 @@ layout, then doors, then decoration, then lighting.
 
 Dungeon Blueprint Forge uses straight horizontal corridors. Vertical travel is
 handled inside `DBF Stairwell Room`; curved/L-shaped corridors and room loops
-are outside the current scope. The 0.10.1 checkpoint compiles in Unreal 5.4;
-large multi-floor visual, NavMesh and Lumen acceptance tests remain part of
-each project's own QA.
+are outside the current scope. The 0.10.1 checkpoint compiles in Unreal 5.4.
+Adaptive Floors and Packed Rooms are documented as development work on the private plugin branch.
+The laboratory completed a visual sweep from 5 to 70 Rooms on 2026-09-19;
+NavMesh, Lumen, networking and low-end hardware acceptance remain part of each
+project's QA.
 
 ## Documentation repository only
 

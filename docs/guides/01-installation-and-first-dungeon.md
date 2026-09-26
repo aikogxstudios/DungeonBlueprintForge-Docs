@@ -1,10 +1,16 @@
 # Instalación y primera mazmorra
 
+Esta guía requiere una copia autorizada del plugin. El repositorio público de
+documentación contiene guías e imágenes, pero no incluye el plugin instalable.
+Si todavía no tienes esa copia, puedes leer el flujo, pero no realizar los
+pasos en Unreal.
+
 ## 1. Instalar
 
 1. Cierra Unreal Editor.
-2. Copia la carpeta completa `DungeonBlueprintForge` en `TuProyecto/Plugins/DungeonBlueprintForge/`.
-3. Comprueba que dentro existan `DungeonBlueprintForge.uplugin` y `Source/`.
+2. Copia la carpeta del plugin privado en `TuProyecto/Plugins/DungeonBlueprintForge/`.
+3. Comprueba que contiene `DungeonBlueprintForge.uplugin` y los archivos de
+   compilación correspondientes a tu entrega (`Source/` o `Binaries/`).
 4. Abre el `.uproject` con Unreal Engine **5.4** y acepta compilar si Unreal lo solicita.
 5. Ve a `Edit > Plugins`, busca **Dungeon Blueprint Forge**, actívalo y reinicia si Unreal lo pide.
 
@@ -19,7 +25,14 @@ Necesitas crear estos Assets en el Content Browser de tu juego:
 3. Un Blueprint de sala `Key` y otro `Boss` (pueden compartir geometría al principio, pero son Definitions distintas).
 4. Un `Dungeon Blueprint Forge Generation Config` que los referencia.
 
-Para un primer test puedes usar salas prehechas. Añade a cada una un Bounds y dos o más Connection Components; la flecha `+X` de cada conexión apunta hacia fuera de la sala. Después crea una `Dungeon Blueprint Forge Room Definition` por categoría y rellena las listas del Generation Config.
+Para un primer test puedes usar salas prehechas. Añade a cada una al menos un
+Bounds. `Start` y `Boss` necesitan una salida válida; una `Normal` que deba
+conectar dos Rooms necesita al menos dos. La flecha `+X` de cada Connection
+Component apunta hacia fuera. Crea una `Dungeon Blueprint Forge Room
+Definition` por categoría, habilítala y añádela a la lista correspondiente
+del Generation Config. Sigue los pasos de [creación de salas](03-authoring-rooms.md)
+y consulta la [referencia de Data Assets](../reference/data-assets.md) si no
+encuentras un campo.
 
 Si usarás pasillos, crea también un `Dungeon Blueprint Forge Corridor Style`, asigna las mallas de suelo/pared y actívalo en el Generation Config.
 

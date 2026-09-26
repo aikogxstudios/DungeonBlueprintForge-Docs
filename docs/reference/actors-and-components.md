@@ -32,6 +32,15 @@ Rotations` limita los giros de 0/90/180/270 que puede probar el generador.
 - `Finalize Room Connections`: recibe las puertas usadas; las salas modulares
   cierran las demás. `Used Connection Ids` es solo lectura tras generar.
 
+## DungeonBlueprintForgePackedRoom
+
+Contenedor de un `Packed Level Actor` del proyecto host. `Number Of Exits`
+activa entre una y cuatro flechas; `Bounds Mode = Manual` usa cajas editadas
+por el autor y `Automatic` aproxima la geometría con hasta 16 cajas. En
+`Unused Exits`, la clase Blueprint de puerta cierra cada salida no conectada;
+Height, Forward y Right Offset y Scale ajustan el encaje por tipo de Room.
+Consulta la [guía Packed](../guides/12-prebuilt-packed-level-actor-rooms.md).
+
 ## DungeonBlueprintForgeModularRoom
 
 Sala construida con HISM. Crea un Blueprint hijo y ajusta sus valores en Class

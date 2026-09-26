@@ -11,6 +11,9 @@ combate, UI, loot, arte y reglas de juego.
 3. Crea una Room rectangular, luego añade L, T, decoración y luces.
 4. Añade pasillos, marcos, cofres y antorchas solo cuando la geometría sea estable.
 5. Introduce Stairwell con una seed fija antes de generar mapas grandes.
+6. Para geometría creada como Packed Level Actor, usa la
+   [guía de Packed Rooms](12-prebuilt-packed-level-actor-rooms.md) y valida
+   bounds, salidas y puertas con una seed fija.
 
 ## Assets mínimos
 
@@ -40,6 +43,23 @@ Consulta [la guía Stairwell](09-procedural-stairwell.md).
 Empieza con 8--12 normales. El checkpoint 0.10.1 permite hasta 69 normales y
 75 Rooms totales. Exige pruebas propias de rendimiento, colisión, NavMesh y
 arte.
+
+Para limitar la expansión por planta, usa `Adaptive Floors` en el Generation
+Config, asigna `Stairwell Room Definitions` y define una huella XY. `Automatic`
+activa ese modo al superar 40 normales. La caja verde de debug permite revisar
+el límite, pero la transición Stairwell, la colisión y la NavMesh deben probarse
+recorriendo el resultado en Unreal.
+
+En layouts compactos, una normal o Hub que no cabe al final puede intentarse
+desde otra conexión libre. Las Rooms modulares preparan bounds y conectores
+durante la búsqueda y construyen su presentación una vez al aceptar el layout.
+Esto reduce el coste de los reintentos; la planificación sigue en el Game
+Thread incluso al usar staged y debe medirse con las seeds y assets reales.
+
+Durante una partida puede usarse `Generate Dungeon Staged`: enlaza primero `On
+Generation Progress` y `On Generation Finished`, y deja inicialmente el
+presupuesto en 6 ms con 4 elementos por frame. Los nodos `Generate Dungeon`
+anteriores permanecen disponibles para compatibilidad y herramientas.
 
 ## Checklist
 
