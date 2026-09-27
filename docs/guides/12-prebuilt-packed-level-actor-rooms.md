@@ -91,8 +91,10 @@ la instancia visible y los Bounds guardados para la candidata.
 
 ## Puertas de salidas libres
 
-La flecha Exit debe estar en el centro del hueco, a la altura del centro de la
-puerta. En `Class Defaults > Dungeon Blueprint Forge > Packed Room > Unused Exits`
+En automático, la flecha Exit se centra horizontalmente en el hueco. Su altura
+usa el centro del `Opening Size` lógico sobre el umbral para que la Room vecina
+quede al mismo nivel; la puerta visual se eleva aparte si el vano es más alto.
+En `Class Defaults > Dungeon Blueprint Forge > Packed Room > Unused Exits`
 puedes corregir cada Blueprint de Room sin modificar la puerta del proyecto:
 
 | Ajuste | Efecto |
