@@ -22,6 +22,13 @@ intersección triángulo/celda y se retiraron pasadas redundantes; Editor y Game
 Development compilan. **La prueba visual con la misma Room y seed sigue
 pendiente**, por lo que no se considera resuelto todavía.
 
+El Output Log permitió identificar otro fallo en el ajuste: una puerta de
+`400 x 400 cm` destinada a un vano de `170 x 236 cm` quedaba en `400 x 236 cm`.
+La escala cambiaba la altura, pero actuaba sobre el eje equivocado para el
+ancho. El código ahora mide qué ejes locales del Actor controlan realmente
+ancho y alto. Esta segunda corrección también requiere una prueba visual antes
+de considerarse aceptada.
+
 La siguiente prueba manual también cubrirá Rooms Packed nuevas: dos o más
 salidas como Room intermedia, puertas host en salidas libres, repetición
 con seed fija y marcos con `Direct Contact` staged. Siguen pendientes una build

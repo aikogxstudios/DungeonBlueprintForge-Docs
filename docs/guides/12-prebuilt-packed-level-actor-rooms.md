@@ -101,7 +101,7 @@ puedes corregir cada Blueprint de Room sin modificar la puerta del proyecto:
 | `Unused Exit Door Forward Offset` | Mueve en el eje `+X` de la flecha: hacia fuera si es positivo. |
 | `Unused Exit Door Right Offset` | Mueve en el eje `+Y` local de la flecha. |
 | `Fit Unused Exit Door To Opening` | Ajusta automáticamente anchura y altura al hueco detectado de cada Exit; en modo Manual usa `Opening Size`. |
-| `Unused Exit Door Scale` | Multiplicador posterior: X grosor, Y anchura y Z altura; `1,1,1` conserva el ajuste automático. |
+| `Unused Exit Door Scale` | Multiplicador posterior en los ejes locales del Actor de puerta; `1,1,1` conserva el ajuste automático. |
 
 La Room guarda `Detected Exit Opening Sizes` para Exit1..Exit4 al buscar los
 huecos con `Auto Center Exits`. La búsqueda admite puertas mucho mayores que
@@ -111,8 +111,9 @@ Center Exits` en una instancia y guarda el Blueprint para renovar medidas
 antiguas. El detector comprueba la intersección real de los triángulos del muro
 con la cuadrícula para evitar que un rectángulo envolvente invada el vano.
 Revisa que no haya seleccionado un hueco decorativo. El plugin mide las Static
-Mesh visibles de la
-puerta, ajusta ancho y alto, aplica `Unused Exit Door Scale` y vuelve a centrar
+Mesh visibles de la puerta y comprueba qué ejes locales del Actor modifican
+realmente su ancho y alto en el plano del Exit. Después aplica `Unused Exit Door
+Scale` y vuelve a centrar
 la geometría antes de añadir los offsets. Si el hueco es más alto que `Opening
 Size`, corrige la altura del centro para mantener la base en el umbral. Compila y guarda el Blueprint Packed
 después de detectar los huecos. Si `Auto Center Exits` estaba desactivado antes
