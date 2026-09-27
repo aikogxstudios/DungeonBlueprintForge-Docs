@@ -55,8 +55,8 @@ Los Blueprints existentes pueden conservar valores anteriores. Revísalos en
 `Class Defaults`; después compila y guarda el Blueprint. Coloca una instancia
 temporal en un nivel, ejecuta `Rebuild Automatic Bounds` desde Details y
 comprueba visualmente las cajas antes de usar la Room con una seed fija. El
-botón de la instancia actualiza esa instancia y marca el nivel; no guarda por
-sí solo los Class Defaults del Blueprint.
+botón copia las cajas calculadas a los valores predeterminados del Blueprint
+contenedor. Guarda ese Blueprint después de comprobar la instancia.
 
 Para una Room L/T, varias cajas azules deben seguir la geometría sin ocupar todo
 el rectángulo exterior. El cálculo preciso analiza triángulos XY en el editor,
@@ -67,6 +67,27 @@ cajas guardadas y no dispone necesariamente de los vértices CPU para repetir
 el cálculo preciso. Si la instancia muestra cajas distintas, vuelve al
 Blueprint contenedor, revisa sus Class Defaults, compila, guarda y ábrelo otra
 vez para confirmar los bounds que se distribuirán.
+
+### Error: «La habitación necesita al menos un componente Dungeon Blueprint Forge Bounds»
+
+Una Packed Room nueva necesita sus **propios** Bounds guardados, aunque otra
+Packed Room ya funcione. El error no depende de que tenga dos o más salidas:
+
+1. Abre la `Room Definition` citada en el mensaje. Confirma que `Room Class`
+   apunta al Blueprint contenedor de esa Room, no al Packed Level Actor ni a
+   otro Blueprint de prueba.
+2. En el Blueprint contenedor, confirma `Packed Level Actor Class` y `Bounds
+   Mode = Automatic`. Compila y guarda.
+3. Coloca una instancia temporal de ese mismo Blueprint en un nivel. Pulsa
+   `Rebuild Automatic Bounds` en sus Details y comprueba que aparecen cajas
+   azules con tamaño real. Guarda de nuevo el Blueprint.
+4. Ejecuta `Validate Room And Log` en la instancia, revisa Output Log y repite
+   la generación con la misma seed.
+
+Si la instancia muestra cajas, pero el generador sigue informando que faltan
+Bounds, conserva capturas de `Room Class`, los componentes del Blueprint, el
+resultado de validación y `Resolved Seed`. Puede existir una diferencia entre
+la instancia visible y los Bounds guardados para la candidata.
 
 ## Puertas de salidas libres
 
@@ -79,10 +100,24 @@ puedes corregir cada Blueprint de Room sin modificar la puerta del proyecto:
 | `Unused Exit Door Height Offset` | Sube o baja la puerta en cm. |
 | `Unused Exit Door Forward Offset` | Mueve en el eje `+X` de la flecha: hacia fuera si es positivo. |
 | `Unused Exit Door Right Offset` | Mueve en el eje `+Y` local de la flecha. |
-| `Unused Exit Door Scale` | Escala local X grosor, Y anchura y Z altura; `1,1,1` conserva el tamaño. |
+| `Fit Unused Exit Door To Opening` | Ajusta automáticamente anchura y altura al hueco detectado de cada Exit; en modo Manual usa `Opening Size`. |
+| `Unused Exit Door Scale` | Multiplicador posterior: X grosor, Y anchura y Z altura; `1,1,1` conserva el ajuste automático. |
 
-El plugin aplica la escala y vuelve a centrar las Static Mesh visibles antes de
-añadir los offsets. Usa una seed fija, cambia un ajuste cada vez y comprueba
-el encaje de cada Exit libre. La prueba visual del 2026-09-26 confirmó el uso
-de Packed Room y una mejora del ajuste de puertas; las nuevas variantes y una
-build empaquetada siguen pendientes de la prueba del usuario.
+La Room guarda `Detected Exit Opening Sizes` para Exit1..Exit4 al buscar los
+huecos con `Auto Center Exits`. La búsqueda admite puertas mucho mayores que
+el `Opening Size` lógico y prefiere el contorno más amplio cuando se solapan
+medidas del mismo vano. Tras actualizar el plugin, vuelve a activar `Auto
+Center Exits` en una instancia y guarda el Blueprint para renovar medidas
+antiguas. El detector examina varios planos cercanos al muro para evitar que
+un marco adelantado reduzca la medida del vano. Revisa que no haya seleccionado
+un hueco decorativo. El plugin mide las Static Mesh visibles de la
+puerta, ajusta ancho y alto, aplica `Unused Exit Door Scale` y vuelve a centrar
+la geometría antes de añadir los offsets. Si el hueco es más alto que `Opening
+Size`, corrige la altura del centro para mantener la base en el umbral. Compila y guarda el Blueprint Packed
+después de detectar los huecos. Si `Auto Center Exits` estaba desactivado antes
+de esta mejora, actívalo una vez para medirlos y guarda la Room; después puedes
+desactivarlo para retocar las flechas manualmente. Usa una seed fija, cambia un ajuste cada vez y
+comprueba el encaje de cada Exit libre. Si la puerta y el hueco tienen siluetas
+distintas, puede hacer falta un marco o una puerta apropiada: la escala no
+cambia la forma. La prueba visual de esta adaptación y una build empaquetada
+siguen pendientes.
