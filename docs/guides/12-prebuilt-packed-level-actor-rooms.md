@@ -108,9 +108,10 @@ huecos con `Auto Center Exits`. La búsqueda admite puertas mucho mayores que
 el `Opening Size` lógico y prefiere el contorno más amplio cuando se solapan
 medidas del mismo vano. Tras actualizar el plugin, vuelve a activar `Auto
 Center Exits` en una instancia y guarda el Blueprint para renovar medidas
-antiguas. El detector examina varios planos cercanos al muro para evitar que
-un marco adelantado reduzca la medida del vano. Revisa que no haya seleccionado
-un hueco decorativo. El plugin mide las Static Mesh visibles de la
+antiguas. El detector comprueba la intersección real de los triángulos del muro
+con la cuadrícula para evitar que un rectángulo envolvente invada el vano.
+Revisa que no haya seleccionado un hueco decorativo. El plugin mide las Static
+Mesh visibles de la
 puerta, ajusta ancho y alto, aplica `Unused Exit Door Scale` y vuelve a centrar
 la geometría antes de añadir los offsets. Si el hueco es más alto que `Opening
 Size`, corrige la altura del centro para mantener la base en el umbral. Compila y guarda el Blueprint Packed

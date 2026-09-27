@@ -17,8 +17,10 @@ La prueba manual posterior encontró un defecto reproducible: una puerta host
 hecha con una sola Static Mesh deja una franja abierta sobre un vano Packed,
 aun con `Auto Center Exits` y `Fit Unused Exit Door To Opening` activos. La
 revisión incremental del 2026-09-27 atribuye el tamaño insuficiente al
-rasterizado aproximado de triángulos del muro; la corrección geométrica y la
-prueba visual siguen pendientes. No se debe considerar resuelto con un build.
+rasterizado aproximado de triángulos del muro. Se sustituyó por una prueba de
+intersección triángulo/celda y se retiraron pasadas redundantes; Editor y Game
+Development compilan. **La prueba visual con la misma Room y seed sigue
+pendiente**, por lo que no se considera resuelto todavía.
 
 La siguiente prueba manual también cubrirá Rooms Packed nuevas: dos o más
 salidas como Room intermedia, puertas host en salidas libres, repetición
