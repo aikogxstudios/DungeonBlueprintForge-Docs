@@ -21,7 +21,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | Corridor / Door Frame / Chest Style | Data Asset del estilo correspondiente |
 | Generator | Actor colocado en el mapa |
 
-## UDungeonBlueprintForgeChestSpawnStyle
+## Chest Spawn Style — cofres
 
 
 ### Chest → Content
@@ -69,7 +69,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | `Draw Chest Debug` | `Desactivado` | Dibuja posición, dirección, estilo y room durante la generación para encontrar reglas incorrectas. |
 | `Debug Duration` | `12.0` | Duración del debug de cofres en el mundo. |
 
-## FDungeonBlueprintForgeCorridorMeshAlignment
+## Corridor Alignment — colocación de cada módulo
 
 
 ### Dungeon Blueprint Forge
@@ -80,7 +80,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | `Position Offset` | `0, 0, 0` | Desplazamiento visual local en centímetros para corregir el pivote. |
 | `Size Multiplier` | `1, 1, 1` | Multiplicador del tamaño del módulo antes de colocarlo; 1,1,1 mantiene su tamaño de referencia. |
 
-## UDungeonBlueprintForgeCorridorStyle
+## Corridor Style — pasillos
 
 
 ### 01 Meshes
@@ -149,7 +149,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | `Corridor Fill Light Max Draw Distance` | `2500.0` | Distancia máxima de dibujado de las luces del pasillo, en cm. |
 | `Corridor Fill Light Fade Range` | `400.0` | Rango de desaparición gradual del relleno del pasillo, en cm. |
 
-## UDungeonBlueprintForgeDoorFrameStyle
+## Door Frame Style — marcos
 
 
 ### Door Frame
@@ -179,7 +179,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | `Enable Frame Collision` | `Desactivado` | Activa la colisión de la geometría generada. |
 | `Frame Affects Navigation` | `Desactivado` | Permite que el marco con colisión participe en la NavMesh. |
 
-## UDungeonBlueprintForgeGenerationConfig
+## Generation Config — reglas de la mazmorra
 
 
 ### 01 Rooms → Required
@@ -235,7 +235,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 
 | Campo en Unreal | Valor inicial | Qué hace |
 |---|---|---|
-| `Generation Expansion Mode` | `FreeExpansion` | Free Expansion crece sin límite XY. Adaptive Floors limita cada planta y usa escaleras. Automatic elige según el número de normales. |
+| `Generation Expansion Mode` | `Free Expansion` | Free Expansion crece sin límite XY. Adaptive Floors limita cada planta y usa escaleras. Automatic elige según el número de normales. |
 | `Automatic Adaptive Floor Threshold` | `40` | Solo en Automatic: hasta este número de normales usa expansión libre; por encima usa plantas adaptativas. |
 | `Stairwell Room Definitions` | `Lista vacía` | Definitions Normal de DBF Stairwell Room que conectan plantas. Obligatorio cuando se resuelve Adaptive Floors. |
 | `Default Footprint Size` | `(30000.0, 30000.0)` | Anchura X y profundidad Y de cada planta, en cm, centradas en el Generator. Se usa cuando Randomize Footprint Size está apagado. |
@@ -284,7 +284,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 |---|---|---|
 | `Minimum Start To Key Graph Distance` | `3` | Distancia mínima de conexiones desde Start para ubicar la Key en una rama; no es una distancia en centímetros. |
 
-## ADungeonBlueprintForgeGenerator
+## Generator — actor colocado en el mapa
 
 
 ### Configuration
@@ -299,7 +299,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 |---|---|---|
 | `Preview Seed` | `1` | Seed del botón de vista previa. Repite el mismo valor para comparar cambios. |
 
-## FDungeonBlueprintForgeRoomSurfaceModule
+## Surface Module — suelo, pared, techo o escalera
 
 
 ### Dungeon Blueprint Forge
@@ -313,7 +313,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | `Size Multiplier` | `1, 1, 1` | Multiplicador del tamaño del módulo antes de colocarlo; 1,1,1 mantiene su tamaño de referencia. |
 | `Position Offset` | `0, 0, 0` | Desplazamiento visual local en centímetros para corregir el pivote. |
 
-## FDungeonBlueprintForgeDecorationRule
+## Decoration Rule — un tipo de prop
 
 
 ### Decorations → Content
@@ -338,7 +338,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | Campo en Unreal | Valor inicial | Qué hace |
 |---|---|---|
 | `Placement Surface` | `Floor` | Floor coloca props sobre suelo; Wall sobre paredes. |
-| `Wall Layout` | `SmartCentered` | Smart Centered reparte props centrados entre paredes distintas. Centered no prioriza paredes distintas. Random Legacy conserva el reparto antiguo. |
+| `Wall Layout` | `Smart Centered` | Smart Centered reparte props centrados entre paredes distintas. Centered no prioriza paredes distintas. Random Legacy conserva el reparto antiguo. |
 | `Floor Placement Zone` | `Edges` | Zona permitida: toda la sala, bordes, esquinas o centro. |
 
 ### Decorations → Quantity
@@ -384,7 +384,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | `Rotation Range` | `(0.0, 360.0)` | Rango de giro horizontal de los props, en grados. Se muestra en opciones avanzadas. |
 | `Position Adjustment` | `0, 0, 0` | Desplazamiento visual local en centímetros para corregir el pivote. Se muestra en opciones avanzadas. |
 
-## ADungeonBlueprintForgeModularRoom
+## Modular Room — sala procedural
 
 
 ### 01 Room Layout
@@ -583,7 +583,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 |---|---|---|
 | `Preview Seed` | `1` | Seed del botón de vista previa. Repite el mismo valor para comparar cambios. |
 
-## ADungeonBlueprintForgePackedRoom
+## Packed Room — sala prehecha
 
 
 ### 01 Packed Room
@@ -618,7 +618,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | `Automatic Bounds XYInset` | `0.0` | Contracción horizontal de las cajas, en cm. Valores grandes pueden permitir solapes visibles. |
 | `Maximum Automatic Bounds` | `16` | Máximo de cajas automáticas. Si se necesitan más, se fusionan regiones cercanas. |
 
-## ADungeonBlueprintForgeRoomBase
+## Room Base — sala creada a mano
 
 
 ### Room
@@ -627,7 +627,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 |---|---|---|
 | `Allowed Rotations` | `0°, 90°, 180°, 270° (constructor)` | Rotaciones de la sala que el planificador puede probar. Mantén al menos una. |
 
-## UDungeonBlueprintForgeConnectionComponent
+## Connection Component — cada salida Exit
 
 
 ### Connection
@@ -640,7 +640,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 | `Opening Size` | `(200.0, 250.0)` | Anchura y altura libres del hueco, en cm. No redimensiona el actor de cierre Packed. |
 | `Already Has Door Frame` | `Desactivado` | Marca una salida cuyo arte ya contiene marco. Omite el marco generado en ese punto y en el contacto directo compartido. |
 
-## UDungeonBlueprintForgeBoundsComponent
+## Bounds Component — ocupación de la sala
 
 
 ### Bounds
@@ -649,7 +649,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 |---|---|---|
 | `Bounds Id` | `("MainBounds")` | Identificador de este volumen de ocupación dentro de la sala. |
 
-## UDungeonBlueprintForgeMarkerComponent
+## Marker Component — punto para el juego host
 
 
 ### Marker
@@ -658,7 +658,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 |---|---|---|
 | `Marker Type` | `("Marker")` | Etiqueta que el juego host consulta para situar contenido; el componente no crea gameplay. |
 
-## UDungeonBlueprintForgeRoomDefinition
+## Room Definition — candidata y papel de la sala
 
 
 ### 01 Room
@@ -698,7 +698,7 @@ Los valores de esta tabla son los predeterminados del código, no los valores de
 |---|---|---|
 | `Chest Spawn Style` | `Sin asignar` | Estilo opcional de cofres de esta definición. Vacío no genera cofres. |
 
-## FDungeonBlueprintForgeGenerationRequest
+## Generation Request — petición desde Blueprint
 
 
 ### Dungeon Blueprint Forge
