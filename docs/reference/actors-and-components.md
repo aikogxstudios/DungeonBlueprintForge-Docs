@@ -22,10 +22,6 @@ que genera; `Clear Dungeon` borra solo lo que pertenece a ese Generator.
 
 Clase base para una sala construida a mano. `RoomRoot` es la raíz y `Allowed
 Rotations` limita los giros de 0/90/180/270 que puede probar el generador.
-La rama de desarrollo añade `GameplayAnchor`, una flecha movible cuyo
-`Gameplay Anchor World Transform` se incluye en cada elemento de `Result.Rooms`.
-El proyecto host puede usarlo para colocar un controlador de encuentro; los
-puntos concretos de spawn siguen en el Blueprint de ese controlador.
 
 - `Get Room Descriptor`: resumen de Bounds, Connections y Markers que usa el
   generador.
@@ -35,6 +31,10 @@ puntos concretos de spawn siguen en el Blueprint de ese controlador.
   tu Blueprint necesita variación determinista.
 - `Finalize Room Connections`: recibe las puertas usadas; las salas modulares
   cierran las demás. `Used Connection Ids` es solo lectura tras generar.
+- `Generate Chest Spawns`: evento posterior a la topología final. Las rooms
+  modulares prueban puntos centrados o ligeramente desplazados junto a paredes
+  interiores y descartan puertas, pilares, decoración y otros cofres. Una room
+  prehecha puede sobrescribirlo con posiciones artísticas propias.
 
 ## DungeonBlueprintForgePackedRoom
 
@@ -42,11 +42,7 @@ Contenedor de un `Packed Level Actor` del proyecto host. `Number Of Exits`
 activa entre una y cuatro flechas; `Bounds Mode = Manual` usa cajas editadas
 por el autor y `Automatic` aproxima la geometría con hasta 16 cajas. En
 `Unused Exits`, la clase Blueprint de puerta cierra cada salida no conectada;
-Height, Forward y Right Offset y Scale ajustan el encaje por tipo de Room.
-En la rama de desarrollo, `Auto Center Exits` busca huecos desde las Static
-Mesh; `Detected Exit Opening Sizes` conserva sus medidas y `Fit Unused Exit Door
-To Opening` escala la puerta libre. `Automatic Bounds XY Inset` contrae las cajas
-calculadas. Hay que reconstruir, guardar y verificar visualmente cada Room.
+Height, Forward y Right Offset corrigen su posición. El actor conserva su escala original y solo se centra por sus Static Mesh visibles.
 Consulta la [guía Packed](../guides/12-prebuilt-packed-level-actor-rooms.md).
 
 ## DungeonBlueprintForgeModularRoom
@@ -58,19 +54,20 @@ editan manualmente.
 | Grupo | Opciones | Decisión recomendada |
 |---|---|---|
 | Forma | `Room Size`, `Room Shape`, `L Arm Size`, `T Arm Size` | Define el volumen interior. Rectangle es el inicio más sencillo; L/T requieren Bounds automáticos múltiples. |
-| Variación | `Randomize Dimensions`, mínimos/máximos, `Auto Detect Dimension Step`, `Dimension Step` | Cambia tamaño por seed. Mantén un paso igual a tu módulo de pared/suelo. |
+| Variación | `Randomize Room Size`, mínimos/máximos, `Auto Detect Grid Step`, `Manual Grid Step` | Cambia tamaño por seed. Mantén un paso igual a tu módulo de pared/suelo. |
 | Superficies | `Floor Module`, `Wall Module`, `Ceiling Module` | Cada módulo aporta mesh, material, rotación, offset y escala. No alteres el mesh original para corregir pivotes. |
 | Opciones | `Generate Ceiling`, `Ceiling Vertical Offset` | Techo y ajuste vertical. |
 | Pilares | `Generate Structural Pillars`, tamaño, offset, mesh/material, `Generate Rectangle Pillars`, layout y spacing | Los pilares se colocan dentro de la sala y decoración/antorchas los respetan. Usa Corners Only primero. |
 | Colisión | `Enable Collision`, `Enable Physics Collision`, `Affect Navigation` | Query Only y navegación apagada es la opción ligera mientras diseñas. |
-| Conexiones | `Snap Connections To Generated Walls`, `Close Unused Connections` | Déjalas activadas. Mantienen puertas en pared y sellan las no usadas. |
+| Conexiones | `Snap Connections To Walls`, `Close Unused Connections` | Déjalas activadas. Mantienen puertas en pared y sellan las no usadas. |
 | Automáticas | `Use Automatic Connections`, North/East/South/West, type, opening y height | Genera conectores cardinales. Para control artístico usa conexiones manuales. |
 | Decoración | Enable, profile, máximo, clearance de pilares, área de combate, intentos y Rules | Se crea solo tras aceptar la sala. Cada Rule contiene mesh, superficie, zona, capa, cantidad, separación, escala y rotación. |
 | Antorchas | Enable, Actor Class, máximo, spacing, altura, door clearance, wall inset, pillar clearance | Asigna un Actor de tu proyecto host. Las antorchas se reparten por paredes distintas y no crean sombras. |
 | Rendimiento de antorcha | radius, max draw distance, fade range | Limita cuánta geometría afecta la luz. Menor radio es más barato. |
 | Luz de relleno | Enable, intensity, color, height below ceiling, local offset | Una Point Light sin sombras en el centro útil. Para **bajarla**, aumenta `Height Below Ceiling`; X/Y solo la desplazan lateralmente. |
 | Rendimiento de relleno | attenuation radius, draw distance, fade range | Mantén el radio dentro de la sala y el draw distance cerca del tamaño real. |
-| Prueba | `Preview Seed` en el Generator y `Generate Preview` | Prueba una seed fija tras compilar y guardar la Room. |
+| Cofres | Se configuran en el `Chest Spawn Style` de la Room Definition | La room prueba puntos junto a paredes interiores, elimina decoración que invada el cofre y lo orienta hacia el interior. |
+| Preview | `Preview Seed`, `Rebuild Preview` | Prueba una habitación sin generar toda la Dungeon. |
 
 Para una explicación práctica de cada grupo y valores iniciales para banners,
 antorchas y luz de relleno, lee [Ajustes de salas procedurales,
@@ -87,9 +84,9 @@ techo; sus componentes son de solo lectura.
 | Componente | Campos | Uso correcto |
 |---|---|---|
 | `DungeonBlueprintForgeBoundsComponent` | `Bounds Id`, Box Extent y Transform | Volumen sólido real. Box Extent es la mitad de tamaño. Usa varias cajas para formas no rectangulares. |
-| `DungeonBlueprintForgeConnectionComponent` | `Enabled`, `Connection Id`, `Connection Type`, `Opening Size` | Una puerta. ID único; tipo igual al que debe conectar; +X hacia fuera; Opening Size = ancho/alto libre. |
+| `DungeonBlueprintForgeConnectionComponent` | `Enabled`, `Connection Id`, `Connection Type`, `Opening Size`, `Already Has Door Frame` | Una puerta. ID único; tipo igual al que debe conectar; +X hacia fuera; Opening Size = ancho/alto libre. |
 | `DungeonBlueprintForgeMarkerComponent` | `Marker Type` | Punto de gameplay que el plugin devuelve como Transform, sin crear dependencia con tus Actors. |
 
-Si necesitas ampliar una sección, abre una solicitud en este repositorio de
-documentación; no hace falta acceder al código del plugin para consultar la
-referencia de uso.
+El [catálogo completo](editor-options.md) explica las 225 opciones editables.
+El panel del editor presenta un grupo por salida; las mallas y volúmenes internos
+se inspeccionan en Components del editor completo.

@@ -1,6 +1,6 @@
 # Referencia de Data Assets
 
-Los Data Assets separan reglas y contenido del código. Crea los cuatro desde el
+Los Data Assets separan reglas y contenido del código. Crea los necesarios desde el
 Content Browser con `Add > Miscellaneous > Data Asset`; asigna siempre arte y
 Blueprints de tu proyecto, no dentro de `Source/` del plugin.
 
@@ -10,12 +10,14 @@ Es el Asset que se asigna en **Configuration** del `DungeonBlueprintForgeGenerat
 Define qué salas son candidatas y cómo se construye el mapa; no guarda el
 progreso de una partida.
 
+Consulta [todas las opciones del editor](editor-options.md) para sus valores iniciales y ayudas.
+
 ### Rooms
 
 | Campo | Qué hace | Regla práctica |
 |---|---|---|
 | `Start Rooms` | Definitions posibles para el inicio. | Debe haber al menos una válida. |
-| `Normal Rooms` | Presupuesto de salas normales. | Debe existir si `Normal Room Count` es mayor que cero. |
+| `Normal Rooms` | Lista de Definitions candidatas normales. | Debe existir si `Normal Room Count` es mayor que cero. |
 | `Hub Rooms` | Salas con tres o más salidas. | Si queda vacío, se usan Normal Rooms. |
 | `Reward Rooms` | Salas terminales de tesoro/evento. | Opcional; vacío significa que no se generan. |
 | `Key Rooms` | Definitions de la llave/objetivo. | Debe existir al menos una válida. |
@@ -37,28 +39,28 @@ progreso de una partida.
 
 | Campo | Significado |
 |---|---|
-| `Generation Expansion Mode` | `Free Expansion` no limita XY; `Adaptive Floors` usa una huella por planta; `Automatic` cambia de modo según el umbral. |
-| `Automatic Adaptive Floor Threshold` | Con el valor predeterminado `40`, 40 o menos usa expansión libre y 41 o más usa Adaptive Floors. Solo se usa en `Automatic`. |
-| `Stairwell Room Definitions` | Definitions `Normal` de `DBF Stairwell Room` reservadas para cambiar de planta. |
-| `Default Footprint Size` | Anchura y profundidad en centímetros de la zona XY de cada planta. |
-| `Randomize Footprint Size` | Permite que la seed elija una huella entre `Minimum` y `Maximum Footprint Size`. |
-| `Adaptive Floor Direction` | `Up Only`, `Down Only` o `Either` para restringir la puerta vertical usada. |
-| `Maximum Adaptive Floor Transitions` | Salvaguarda técnica; no determina cuántas plantas debe crear el generador. |
-| `Draw Adaptive Floor Footprint` | Dibuja una caja verde con el alcance XY resuelto. No crea colisión. |
-| `Adaptive Floor Debug Half Height` / `Duration` | Altura visual y duración de la caja de depuración. |
-| `Maximum Generation Attempts` | Reinicios completos de layout por solicitud. Se limita a 1--32 y usa 20 por defecto; aumentarlo puede elevar tanto la tasa de éxito como el tiempo síncrono. |
-| `Maximum Local Backtrack Steps` | Normales recientes que el planificador puede retirar para liberar conexiones antes de reiniciar el layout. Usa 2 por defecto, admite 0--8 y restaura después el total solicitado. |
-| `Print Generation Retry Debug` | Muestra en pantalla los reintentos completos, su tiempo en milisegundos y los pasos de backtracking. Está desactivado por defecto. |
-| `Staged Generation Time Budget` | Presupuesto aproximado por frame para la presentación escalonada. Usa 6 ms por defecto. |
-| `Maximum Staged Items Per Frame` | Máximo de elementos de presentación construidos por frame. Usa 4 por defecto. |
+| `Generation Expansion Mode` | `Free Expansion` conserva el crecimiento actual sin límite XY. `Adaptive Floors` mantiene las salas y pasillos dentro de una huella XY y reserva las Stairwell para continuar verticalmente. `Automatic` usa plantas adaptativas solo si `Normal Room Count` supera el umbral. |
+| `Automatic Adaptive Floor Threshold` | Umbral de `Normal Room Count` para `Automatic`. Con el valor predeterminado `40`, 40 o menos usa expansión libre y 41 o más usa plantas adaptativas. |
+| `Stairwell Room Definitions` | Definitions `Normal` de `DBF Stairwell Room` reservadas para el cambio de planta. Es obligatorio rellenarla en plantas adaptativas. |
+| `Default Footprint Size` | Anchura y profundidad, en centímetros, de cada planta cuando no se aleatoriza. Es una zona local centrada en el Generator, no un límite de altura. |
+| `Randomize Footprint Size` y `Minimum/Maximum Footprint Size` | Eligen una huella XY dentro del rango mediante la seed. El tamaño resuelto se devuelve en `Last Result`. |
+| `Stairwell Direction` | `Up Only`, `Down Only` o `Either`, según qué puerta vertical de la Stairwell puede usarse para seguir el recorrido. |
+| `Maximum Adaptive Stairwell Transitions` | Salvaguarda técnica de intentos verticales por generación; no define un número objetivo de plantas. |
+| `Draw Adaptive Floor Footprint` | Dibuja una caja verde que marca el alcance horizontal máximo de la generación adaptativa. No modifica colisión ni placement. |
+| `Adaptive Floor Debug Half Height` / `Duration` | Altura visual de la caja y segundos visibles tras generar. Solo sirven para depurar el límite XY. |
+| `Maximum Generation Attempts` | Reinicios completos de layout por solicitud, limitado a 1--32 y 20 por defecto. Aumentarlo puede mejorar la tasa de éxito, pero también el tiempo síncrono de generación. |
+| `Maximum Local Backtrack Steps` | Rooms normales recientes que se pueden retirar para liberar conexiones antes de reiniciar el layout. Rango 0--8, valor predeterminado 2; las normales retiradas se restauran tras colocar Hub o Key. |
+| `Print Generation Retry Debug` | Muestra en pantalla reinicios completos, tiempo por intento y pasos de backtracking. Solo diagnóstico; desactivado por defecto. |
+| `Staged Generation Time Budget` | Tiempo máximo aproximado de presentación por frame para los nodos Staged. Predeterminado 6 ms. |
+| `Maximum Staged Items Per Frame` | Límite de Rooms, pasillos u otros elementos construidos en un frame. Predeterminado 4. |
 
-La altura real y el número de tramos pertenecen al actor Stairwell y a su
-`Stair Repeat Count`; el Config solo controla la selección procedural.
+La altura real y el número de tramos pertenecen al actor `DBF Stairwell Room`: ajusta allí
+`Stair Repeat Count`, descansillos y mallas. El Config solo decide cuándo esa Definition
+puede ser seleccionada para salir de una huella llena.
 
-El debug se dibuja una vez después del resultado final. `Last Result` conserva
-modo, huella y transiciones también en un fallo. Durante los reintentos, las
-Rooms modulares calculan primero su geometría lógica y construyen meshes,
-colisión, navegación, decoración y luces después de aceptar el layout.
+El debug se dibuja una sola vez tras el éxito o fallo final. `Last Result`
+conserva el modo, la huella resuelta y las transiciones también en un fallo, para
+que una seed problemática pueda diagnosticarse sin reconstruir su configuración.
 
 ### Corridors y Special Rooms
 
@@ -69,7 +71,6 @@ colisión, navegación, decoración y luces después de aceptar el layout.
 | `Generate Door Frames` | Coloca marcos cuando toda la topología está finalizada. Funciona con pasillos y `Direct Contact`. |
 | `Door Frame Style` | Data Asset independiente con el mesh y reglas visuales de todos los marcos. |
 | `Minimum Start To Key Graph Distance` | Mínimo de pasos lógicos desde Start antes de colocar Key. No es distancia en centímetros. |
-| `bDrawDebug` | Campo obsoleto conservado por compatibilidad; no cambia la generación actual. |
 
 ## 2. Dungeon Blueprint Forge Room Definition
 
@@ -83,11 +84,19 @@ apunten temporalmente al mismo Blueprint.
 | `Category` | Rol: Start, Normal, Hub, Reward, Key o Boss. Debe coincidir con la lista donde se añade. |
 | `Selection Weight` | Probabilidad relativa entre candidatas compatibles. `0` evita que se seleccione. |
 | `Enabled` | Activa/desactiva sin borrar el Asset. |
-| `Chest Spawn Style` | Reglas opcionales de cofres para esta variante. Vacío significa que no genera cofres. |
-| `Gameplay Zone` | Etiqueta `Safe`, `Combat`, `Special` o `MiniBoss`. Se copia al resultado y no crea enemigos. |
+| `Chest Spawn Style` | Reglas opcionales de cofres para esta variante concreta de room. Vacío significa que esa room nunca genera cofres. |
+| `Gameplay Zone` | Etiqueta genérica para el juego host: `Safe`, `Combat`, `Special` o `MiniBoss`. Se copia al resultado de la sala; no crea ni configura enemigos. |
 
 Consulta [Rooms prehechas con Packed Level Actor](../guides/12-prebuilt-packed-level-actor-rooms.md)
 para el actor contenedor, cajas, flechas y validación.
+
+### Gameplay Zone y sistemas del juego
+
+Usa `Safe` para salas sin encuentro automático y `Combat` para las que un
+sistema del proyecto host debe considerar como combate normal. `Special` y
+`MiniBoss` reservan variantes con reglas propias. El plugin no conoce Pawns,
+vida, IA, loot, UI ni puertas de tu juego: esos elementos se crean desde el
+proyecto que utiliza el plugin después de `On Generation Finished`.
 
 ## 3. Dungeon Blueprint Forge Corridor Style
 
@@ -127,24 +136,38 @@ Define el aspecto de todos los marcos de puerta de una mazmorra. Se asigna en
 
 ## 5. Dungeon Blueprint Forge Chest Spawn Style
 
-Este Asset usa un Blueprint Actor de cofre de tu proyecto. El plugin decide una
-posición segura junto a paredes interiores; tu Blueprint conserva inventario,
-interacción, arte y estado de abierto.
+Define cofres como **Actors del proyecto host**. No incluye un mesh, inventario
+ni lógica de apertura: asigna tu Blueprint de cofre en `Chest Actor Class`.
+El Generator lo ejecuta después de aceptar la mazmorra y de cerrar puertas.
 
-| Campo | Uso |
-|---|---|
-| `Chest Actor Class` | Blueprint Actor que se crea. |
-| `Enable Chest Spawning` | Activa o desactiva el preset. |
-| `Base Chest Chance` | Probabilidad de que una Room reciba cofres. |
-| `Minimum/Maximum Chests` | Rango de cofres tras superar la probabilidad. |
-| `Wall Inset`, `Chest Clearance`, `Door Clearance` | Mantienen el cofre fuera de paredes, props, pilares y puertas. |
-| `Position/Rotation Offset`, `Scale` | Corrige pivote y orientación del asset. |
-| `Draw Chest Debug` | Dibuja diagnóstico temporal de puntos y descartes. |
+| Grupo | Campo | Qué hace |
+|---|---|---|
+| Content | `Chest Actor Class` | Blueprint Actor de cofre que el plugin crea. Debe tener su propia lógica de abrir, loot y colisión. |
+| Quantity | `Enable Chest Spawning` | Desactiva cofres sin perder el preset. |
+| Quantity | `Base Chest Chance` | Probabilidad base de que una room tenga cofres. |
+| Quantity | `Bonus Chance Per Extra Chest` | Aumento automático por cada cofre extra permitido; hace que una room capaz de alojar más cofres tenga una probabilidad algo mayor. |
+| Quantity | `Minimum/Maximum Chests` | Rango seleccionado tras superar la probabilidad. Con mínimo `0`, una tirada aprobada genera como mínimo uno; la ausencia ya la controla la probabilidad. `0 / 3` es el punto de partida recomendado. |
+| Placement | Colocación junto a pared | El sistema prueba puntos centrados o levemente desplazados en paredes interiores y elige caras distintas si hay varios cofres. No usa esquinas ni centro de la room. |
+| Safety | `Wall Inset` | Distancia interior respecto a la pared medida desde el pivote del Actor. |
+| Safety | `Extra Distance From Wall` | Hueco visual adicional entre el volumen del cofre y la pared. Empieza en `100 cm`; súbelo si aún parece pegado. |
+| Safety | `Chest Clearance` | Margen extra reservado para el cofre. Se suma al volumen real del Actor y al de cada decoración HISM que invada el espacio; el cofre tiene prioridad. |
+| Safety | `Door Clearance` | Distancia mínima desde aperturas para no bloquear entradas, salidas o pasillos. |
+| Visual Adjustment | `Position Offset`, `Rotation Offset`, `Scale` | Corrige pivote, altura, orientación y tamaño del Blueprint de cofre sin modificarlo. El Forward (+X) calculado apunta hacia la zona jugable. |
+| Debug | `Draw Chest Debug`, `Debug Duration` | Dibuja esfera, flecha y texto temporal con posición, tipo de room y Room Definition para encontrar una regla incorrecta. |
 
-## Validación rápida de los tres Assets
+### Valores iniciales
+
+Para una room normal: `Base Chest Chance 25`, `Bonus 5`, `Minimum 0`,
+`Maximum 2`, pesos `1/1/1`, `Wall Inset 120 cm`, `Extra Distance From Wall
+100 cm`, `Chest Clearance 180 cm` y `Door Clearance 240 cm`. En una room
+Reward puedes usar `65`, `10`, `1`, `3`.
+
+## Validación rápida de los Assets
 
 1. Todas las listas obligatorias tienen al menos una Definition `Enabled`.
 2. Cada Definition apunta a una Room Class válida y su Category coincide.
 3. Si Connection Mode puede crear pasillos, el Style tiene mallas válidas.
 4. Repite una seed fija antes de cambiar pesos, tamaños o conexiones: es la
    manera más rápida de saber qué ajuste cambió el resultado.
+5. Para cofres, asigna el Chest Spawn Style a la Room Definition; no se asigna
+   en el Generation Config ni en el Actor Generator.

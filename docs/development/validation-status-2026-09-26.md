@@ -1,3 +1,5 @@
+> Checkpoint histórico de UE 5.4. Para el trabajo actual consulta [el estado de UE 5.8](ue58-validation-2026-10-09.md).
+
 # Estado de validación — 2026-09-26
 
 La rama privada de desarrollo mantiene el descriptor `0.10.1` para Unreal

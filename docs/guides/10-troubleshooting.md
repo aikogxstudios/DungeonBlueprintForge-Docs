@@ -10,8 +10,8 @@
 | La Stairwell no aparece | Debe estar en `Normal Rooms`, con `Category = Normal`; sube temporalmente su peso para probarla. |
 | Una Packed Room no aparece como intermedia | Revisa `Category = Normal`, `Enabled`, `Selection Weight > 0`, la lista `Normal Rooms` y al menos dos salidas válidas. Conserva la seed y consulta la [guía Packed](12-prebuilt-packed-level-actor-rooms.md). |
 | «La habitación necesita al menos un componente Dungeon Blueprint Forge Bounds» en otra Packed Room | Comprueba que la `Room Class` del Data Asset apunta a su Blueprint contenedor. En una instancia de ese Blueprint, ejecuta `Rebuild Automatic Bounds`, confirma cajas azules, guarda el Blueprint y prueba `Validate Room And Log`. Cada Room necesita sus propios Bounds guardados. Consulta la [guía Packed](12-prebuilt-packed-level-actor-rooms.md). |
-| Una puerta de salida libre queda desplazada | Centra la flecha en el hueco y ajusta `Unused Exit Door Height/Forward/Right Offset` y `Scale` en Class Defaults del Blueprint Packed. Regenera con la misma seed. |
-| Una puerta Packed deja una franja superior o lateral | Comprueba `Detected Exit Opening Sizes`, activa `Auto Center Exits`, reconstruye y guarda el Blueprint. Usa `Fit Unused Exit Door To Opening = true` y `Unused Exit Door Scale = 1,1,1`; compara el vano objetivo y el tamaño de malla registrado en Output Log. Una silueta distinta puede requerir otro Actor o marco. |
+| Una puerta de salida libre queda desplazada | Centra la flecha en el hueco y ajusta `Unused Exit Door Height/Forward/Right Offset` en Class Defaults del Blueprint Packed. Regenera con la misma seed. |
+| Una puerta Packed deja una franja superior o lateral | Comprueba `Detected Exit Opening Sizes`, activa `Auto Center Exits`, reconstruye y guarda el Blueprint. El cierre conserva el tamaño de su Blueprint: solo se centra. Si su silueta o tamaño no cubre el vano, utiliza un actor de cierre adecuado en tu proyecto; Opening Size no lo escala. |
 | `CookAll` de la copia 5.8 falla con `CR_Mannequin_Procedural` o `HeroAnin` | Revisa esos assets del proyecto host. `HeroAnin` informa que le falta Skeleton. Consulta el [estado de UE 5.8](../development/ue58-validation-2026-10-09.md); una compilación C++ correcta no resuelve errores de assets. |
 | Las cajas automáticas forman un rectángulo demasiado grande | Revisa `Bounds Mode = Automatic`, los valores de celda/margen y las mallas Packed; reconstruye en una instancia, comprueba las cajas azules y compila/guarda el Blueprint contenedor. |
 | Adaptive Floors no encuentra Stairwell | Añade una Definition válida a `Stairwell Room Definitions`, activa el debug de huella y comprueba conexiones libres, Bounds, rotaciones y dirección. |
@@ -21,6 +21,7 @@
 | La auditoría final rechaza un pasillo | Es una protección: encontró un cruce o una entrada lateral a una Room y descartó ese layout. No la desactives. |
 | Hub o Key se quedan sin salida | Deja `Maximum Local Backtrack Steps = 2` para que el planificador pueda retirar hasta dos normales recientes, liberar sus conexiones y probar otra combinación. |
 | Quiero saber cuándo reintenta | Activa `Print Generation Retry Debug`: cian indica un nuevo layout y muestra los milisegundos del anterior; amarillo indica backtracking local. |
+| Hay marcos duplicados en una puerta | Marca Already Has Door Frame en el Exit cuyo arte ya incluye marco; comprueba Direct Contact y regenera. |
 | La salida alta no conecta | No modifiques conectores automáticos; prueba una seed fija y confirma la Room siguiente. |
 | El cofre no sale | Revisa clase host, estilo asignado, bounds, puertas, pilares y `Door Clearance`. |
 | Un cliente intenta generar | Genera solo en servidor o GameMode. |

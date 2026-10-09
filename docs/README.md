@@ -1,48 +1,32 @@
-# Documentación de Dungeon Blueprint Forge
+# Documentación de Dungeon Blueprint Forge — UE 5.8
 
-Esta carpeta está organizada por intención. Empieza por una guía; utiliza la referencia solo cuando quieras entender un campo concreto.
+Empieza por [la guía de uso paso a paso](guides/00-complete-user-workflow.md).
+Si solo necesitas entender una opción, consulta [el catálogo completo en español](reference/editor-options.md).
 
-## Guías para usar el plugin
+## Guías
 
-1. [Recorrido completo de usuario](guides/00-complete-user-workflow.md)
-2. [Instalación y primera mazmorra](guides/01-installation-and-first-dungeon.md)
-3. [Implementación Blueprint paso a paso](guides/02-blueprint-implementation.md)
-4. [Crear salas prehechas y procedurales](guides/03-authoring-rooms.md)
-5. [Ajustes de salas procedurales, explicados](guides/04-procedural-room-settings.md)
-6. [Iluminación y marcos de puerta en pasillos](guides/05-corridor-lighting-and-door-frames.md)
-7. [Cofres procedurales](guides/06-procedural-chests.md)
-8. [Generación multijugador](guides/07-multiplayer-generation.md)
-9. [Encuentros de enemigos en Blueprints del proyecto host](guides/08-host-enemy-encounters-blueprints.md)
-10. [Sala Stairwell: subir una planta](guides/09-procedural-stairwell.md)
-11. [Diagnóstico y errores frecuentes](guides/10-troubleshooting.md)
-12. [Generación staged y rendimiento](guides/11-staged-generation-and-performance.md)
-13. [Rooms prehechas con Packed Level Actor](guides/12-prebuilt-packed-level-actor-rooms.md)
+1. [Instalación y primera mazmorra](guides/01-installation-and-first-dungeon.md)
+2. [Flujo Blueprint](guides/02-blueprint-implementation.md)
+3. [Crear salas](guides/03-authoring-rooms.md)
+4. [Ajustes procedurales](guides/04-procedural-room-settings.md)
+5. [Pasillos, luces y marcos](guides/05-corridor-lighting-and-door-frames.md)
+6. [Cofres](guides/06-procedural-chests.md)
+7. [Multijugador](guides/07-multiplayer-generation.md)
+8. [Encuentros del proyecto host](guides/08-host-enemy-encounters-blueprints.md)
+9. [Escaleras](guides/09-procedural-stairwell.md)
+10. [Diagnóstico](guides/10-troubleshooting.md)
+11. [Staged y rendimiento](guides/11-staged-generation-and-performance.md)
+12. [Packed Rooms](guides/12-prebuilt-packed-level-actor-rooms.md)
 
-La guía Stairwell y la referencia de Data Assets incluyen el prototipo de
-`Adaptive Floors`, con límites XY por planta, selección dedicada de Stairwell,
-modo automático y debug visual. Está compilado en el checkpoint privado de
-desarrollo. También incluye preparación ligera de Rooms modulares y fallback de
-conexiones para layouts compactos. El laboratorio completó una barrida visual
-de 5 a 70 Rooms; NavMesh, red y hardware modesto siguen requiriendo
-pruebas dedicadas.
+## Referencia y resultados
 
-Packed Rooms con `Automatic Bounds` se probaron visualmente en el laboratorio
-5.4. El ajuste de escala/desplazamiento completo de puertas y la copia de UE
-5.8 aún necesitan prueba visual y una build empaquetada.
+- [225 opciones del editor](reference/editor-options.md)
+- [Data Assets](reference/data-assets.md)
+- [Actors y componentes](reference/actors-and-components.md)
+- [Estado de UE 5.8](development/ue58-validation-2026-10-09.md)
+- [Revisión de mantenimiento](development/maintenance-review-2026-10-09.md)
+- [Comprobaciones antes de distribuir](development/release-checklist.md)
 
-## Referencia
-
-- [Data Assets](reference/data-assets.md): qué crear y qué significa cada ajuste de configuración, definición de sala y estilo de pasillo.
-- [Actors y componentes](reference/actors-and-components.md): Generator, Room Base, Modular Room, Corridor y componentes de Bounds/Connection/Marker.
-
-## Desarrollo y publicación
-
-- [Lista de liberación](development/release-checklist.md)
-- [Estado de validación del 2026-09-26](development/validation-status-2026-09-26.md)
-- [Migración a UE 5.8: comprobado y pendiente](development/ue58-validation-2026-10-09.md)
-
-## Alcance público
-
-Este repositorio publica documentación e imágenes de uso. El código, el
-archivo `.uplugin`, los Assets y las versiones instalables se mantienen en el
-canal privado de distribución.
+Las guías y la referencia son las instrucciones actuales de UE 5.8. Los
+documentos numerados antiguos y las notas fechadas se conservan como historia;
+sus builds y conclusiones corresponden a la fecha y versión que indican.

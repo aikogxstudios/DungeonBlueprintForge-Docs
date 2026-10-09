@@ -1,31 +1,27 @@
-# Estado de la migración a Unreal Engine 5.8 — 2026-10-09
+# Estado de UE 5.8 — 2026-10-09
 
-La rama privada `agent/ue58-migration` del plugin se preparó para Unreal Engine
-5.8.3 con el proyecto de pruebas `DungeonLab54` copiado a una carpeta separada.
-El nombre interno del módulo sigue siendo `DungeonLab54` para conservar sus
-referencias. Esta documentación pública no incluye el plugin ni el proyecto.
+El plugin activo utiliza **Unreal Engine 5.8.3**. El descriptor declara
+EngineVersion 5.8.0 y el plugin conserva VersionName 0.10.1. La versión 5.4
+corresponde a checkpoints históricos, no a las instrucciones actuales.
 
-## Comprobado
+## Evidencia anterior a la revisión de opciones
 
-- Compilan los targets Editor y Game Development del proyecto de pruebas.
-- `BuildPlugin` Win64 terminó para Editor, Game Development y Game Shipping.
-- El cook de paquetes referenciados terminó con 658 paquetes, sin errores ni avisos.
-- El descriptor del plugin declara `EngineVersion = 5.8.0`; `VersionName` sigue
-  en `0.10.1` hasta completar la aceptación funcional.
+- Editor y Game Development compilaron en UE 5.8.
+- BuildPlugin Win64 pasó para Editor, Game Development y Game Shipping.
+- Cook de paquetes referenciados: 658 paquetes, cero errores y avisos.
+- El usuario confirmó el funcionamiento en Unreal y confirmó el cierre Packed
+  sin autoescalado y la exclusión de marcos ya presentes en las salidas.
 
-## Pendiente y problemas conocidos
+## Revisión actual
 
-- `CookAll` del laboratorio falló por `CR_Mannequin_Procedural` (RigVM no resuelve
-  una propiedad de memoria) y `HeroAnin` (Animation Blueprint sin Skeleton).
-  Son assets del proyecto de pruebas; no se ha demostrado que fallen en 5.4.
-- Algunas texturas UDIM de `Stylised_Dungeon_Pack` avisan de que Virtual
-  Texturing está desactivado y solo se cocinará el primer bloque.
-- Falta abrir la copia 5.8 en el editor, compilar sus Blueprints y comprobar
-  generación, Packed Rooms, puertas, iluminación, colisión y navegación.
-- La puerta de salida libre mide las Static Mesh visibles y escala el Actor
-  completo. El encaje visual de todos los huecos y siluetas sigue sin aceptar.
-- Falta una build empaquetada completa y pruebas en hardware objetivo.
+Se agrupan opciones y conexiones, se añaden ayudas en español y se corrigen
+validación de medidas no finitas, seed negativa en replicación, diagnósticos
+de cancelación y medidas Packed obsoletas. Consulta [la revisión actual](maintenance-review-2026-10-09.md)
+para builds, pruebas automáticas y comprobaciones visuales pendientes.
 
-La compilación del plugin no equivale a validar todos los assets ni a declarar
-una versión lista para distribución. La guía de [Rooms Packed](../guides/12-prebuilt-packed-level-actor-rooms.md)
-explica cómo recalcular los huecos y probar una seed fija.
+## Límite de las afirmaciones
+
+El CookAll anterior procesó 2594 paquetes y falló en CR_Mannequin_Procedural
+(RigVM) y HeroAnin (Animation Blueprint sin Skeleton). No se repitió ni se
+modificaron esos assets en esta revisión. Una build empaquetada completa,
+NavMesh, late join y rendimiento en hardware objetivo requieren pruebas propias.

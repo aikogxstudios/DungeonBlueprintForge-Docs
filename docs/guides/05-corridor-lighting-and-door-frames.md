@@ -11,11 +11,10 @@ El plugin añade Point Lights nativas sin sombras al propio Actor del pasillo:
 un pasillo corto recibe una luz centrada y uno largo recibe varias, con un límite
 máximo para mantener el rendimiento controlado.
 
-`Isolate Corridor Local Lights From Player` viene activado. Estas luces locales
-iluminan geometría generada en el canal 1; el personaje puede mantenerse en el
-canal 0 para evitar iluminación directa sobre su cabeza. Desactiva esa opción
-solo si quieres que el relleno del pasillo afecte también al personaje. Lumen
-indirecto y luces manuales externas deben revisarse visualmente en tu proyecto.
+`Isolate Corridor Local Lights From Player` viene activado. Las luces locales
+del pasillo iluminan su suelo, paredes y techo, pero no al jugador que conserva
+el canal predeterminado. La iluminación global sigue funcionando normalmente.
+Desactívalo solo si quieres que esa luz también afecte al personaje.
 
 | Ajuste | Valor inicial | Uso |
 |---|---:|---|
@@ -45,6 +44,15 @@ comparten el mismo hueco de contacto directo, se crea un único marco para evita
 dos Actors superpuestos.
 
 No se crean marcos en conexiones descartadas o cerradas.
+
+En el Blueprint de una Room, selecciona cada componente `Exit` que ya tenga
+un marco integrado en su arte y activa **Dungeon Blueprint Forge → Connection
+→ Already Has Door Frame**. Su valor inicial es desactivado. El generador omite
+el marco en esa salida; en `Direct Contact` también omite el de la otra Room
+que comparte el mismo punto, independientemente del orden de generación.
+Con un pasillo, la salida del otro extremo conserva su propio marco si no está
+marcada. Funciona tanto en generación normal como Staged y no modifica el arte
+ni el tamaño del actor. Compila y guarda el Blueprint tras marcar sus salidas.
 
 | Ajuste | Uso |
 |---|---|

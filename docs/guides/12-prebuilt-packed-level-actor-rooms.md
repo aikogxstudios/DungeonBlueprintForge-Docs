@@ -49,50 +49,21 @@ de `Result.Rooms`. Los puntos donde aparecen los enemigos siguen estando en el
 Blueprint de ese controlador; revisa que sus posiciones relativas queden dentro
 del suelo de esta Packed Room.
 
-La puerta se crea con la orientación de la flecha `Exit` libre. La flecha queda
-centrada horizontalmente en la abertura y a media altura del `Opening Size`
-lógico sobre el umbral. Si el vano real es más alto, el plugin eleva la puerta
-visual sin elevar la Room conectada. Al crearla, desplaza el Actor para centrar el conjunto
-de sus Static Mesh visibles en ese punto; esto admite Blueprints cuyo pivote
-está separado de la geometría. La puerta debe tener mallas visibles registradas
-y dimensiones apropiadas para el hueco. Si no tiene Static Mesh, se conserva
-el pivote del Blueprint como referencia.
+El actor de cierre se crea con la posición y orientación de la flecha `Exit`
+libre. Conserva la escala definida en su Blueprint: el plugin no modifica su
+ancho, alto ni profundidad y no añade geometría de cierre. Solo desplaza el
+actor para centrar sus Static Mesh visibles en el hueco. En modo Automatic
+usa la altura detectada; en Manual usa el centro de la flecha. Si no hay
+Static Mesh visibles registradas, conserva el pivote en la flecha.
 
-Para ajustar la altura de todas las puertas libres de una Packed Room concreta,
-abre su Blueprint y cambia `Unused Exit Door Height Offset` en **Class Defaults
-→ Dungeon Blueprint Forge → Packed Room → Unused Exits**. El valor es en
-centímetros: `+20` sube la puerta 20 cm y `-20` la baja 20 cm. El valor inicial
-es `0`. Después, regenera con la misma seed y comprueba la puerta de perfil.
-Cada Blueprint de Packed Room puede tener un valor diferente.
+En **Class Defaults → Dungeon Blueprint Forge → Packed Room → Unused Exits**,
+`Unused Exit Door Height Offset` desplaza el centro verticalmente en centímetros;
+`Unused Exit Door Forward Offset` y `Unused Exit Door Right Offset` lo desplazan
+en los ejes locales `+X` y `+Y` de la flecha. Estos son ajustes explícitos de
+posición. El tamaño y la geometría se configuran en el Blueprint host.
 
-En el mismo grupo están `Unused Exit Door Forward Offset` y `Unused Exit Door
-Right Offset`: positivos mueven la puerta hacia el `+X` y `+Y` de la flecha;
-negativos, en sentido contrario. Estos ejes giran con cada salida. `Unused
-Exit Door Scale` multiplica los ejes **locales del Actor de puerta** después
-del ajuste automático. Según cómo esté orientada la Static Mesh dentro de su
-Blueprint, el ancho puede depender de `X` o de `Y`. Con `Fit Unused Exit Door
-To Opening` activado (valor inicial), la Room mide cuál de los ejes locales
-cambia realmente el ancho y la altura visibles y ajusta el Actor completo.
-En modo
-Manual, o si no se detectó un hueco, usa `Opening Size` de la flecha. `1,1,1`
-conserva el ajuste automático; desactiva `Fit Unused Exit Door To Opening` si
-quieres conservar el tamaño original de la puerta. `Detected Exit Opening
-Sizes` muestra las medidas guardadas de Exit1..Exit4. La geometría se vuelve a
-centrar después de escalarla; si el hueco detectado es más alto que `Opening
-Size`, la puerta sube lo necesario para mantener su base junto al umbral.
-El detector comprueba la intersección real de cada triángulo del muro con la
-cuadrícula del vano. Así evita que el rectángulo envolvente de un triángulo
-marque como pared una parte vacía del hueco. El ajuste escala el Actor completo.
-Output Log indica el vano objetivo, el tamaño de las mallas antes y después
-de escalar y la escala final; compara estas cifras con el hueco visible si
-queda una franja abierta.
-Si desactivaste `Auto Center Exits` antes de incorporar esta mejora, actívalo
-una vez para medir y guardar las aberturas, y después desactívalo de nuevo si
-quieres retocar manualmente las flechas.
-Compila y guarda el Blueprint de la Packed Room
-tras detectar los huecos, y compara la misma seed. Una puerta con silueta
-distinta del hueco (por ejemplo, rectangular frente a arco) puede necesitar
-un marco o un Actor de puerta apropiado; la escala no cambia su forma.
+`Detected Exit Opening Sizes` conserva las medidas detectadas como información
+de autoría; esas medidas no redimensionan el actor de cierre.
 
 ## Añadirla al generador
 

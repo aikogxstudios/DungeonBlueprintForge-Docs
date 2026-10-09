@@ -1,163 +1,128 @@
-# Ajustes de una sala procedural, explicados
+# Ajustes de salas procedurales — UE 5.8
 
-Esta guía es para el Blueprint hijo de `DungeonBlueprintForgeModularRoom`. Los
-nombres de las opciones se mantienen exactamente como aparecen en Unreal, pero
-las explicaciones indican qué tocar primero y qué puedes dejar por defecto.
+Configura el Blueprint hijo de `DungeonBlueprintForgeModularRoom` en **Class
+Defaults**. Los nombres siguientes coinciden con el editor; sus ayudas están
+en español. Para consultar todos los campos, abre [el catálogo de opciones](../reference/editor-options.md).
 
-## Orden sencillo para configurar una sala
+## 01 Room Layout: forma y tamaño
 
-1. Define forma y tamaño en **01 Room Layout**.
-2. Asigna los tres meshes en **02 Surface Modules**.
-3. Configura las puertas en **04 Connections**.
-4. Compila y guarda el Blueprint; genera una seed fija desde el Generator y
-   deja la sala base correcta antes de añadir props.
-5. Añade decoración, antorchas y luz de relleno al final.
-
-No hace falta cambiar todas las opciones: los valores por defecto están pensados
-para una sala rectangular válida cuando los módulos de mesh están asignados.
-
-## 01 Room Layout
-
-| Opción | Qué cambia | Punto de partida |
-|---|---|---|
-| `Room Shape` | Plano de la sala: Rectangle, L o T. | `Rectangle` para la primera sala. |
-| `Room Size` | Anchura interior X/Y y altura del techo. | Múltiplos del tamaño de tu tile de suelo. |
-| `Randomize Dimensions` | La seed escoge el tamaño. | Apagado al crear la sala; actívalo tras comprobar el preview. |
-| `Minimum Room Size` / `Maximum Room Size` | Límites del tamaño aleatorio. | Compatibles con puertas y módulos. |
-| `Auto Detect Dimension Step` | Detecta el tamaño de los módulos para teselar bien. | Activo con assets modulares normales. |
-| `Dimension Step` | Paso manual si desactivas la detección. | Igual al tile de suelo X/Y y a la altura de pared. |
-
-En salas L y T, los ajustes de brazos cambian el suelo caminable real, no son
-controles decorativos.
-
-## 02 Surface Modules
-
-`Floor Module`, `Wall Module` y `Ceiling Module` definen los meshes repetidos
-de la sala.
-
-| Opción del módulo | Uso |
+| Campo | Qué haces con él |
 |---|---|
-| `Mesh` | Asset modular que se repite. Es obligatorio. |
-| `Material Override` | Opcional. Vacío mantiene el material que ya tiene el mesh. |
-| `Rotation Offset` | Corrige un asset importado en otro eje. |
-| `Size Multiplier` | Ajuste fino; normalmente 1.0. |
-| `Position Offset` | Corrige un pivote o una pequeña separación sin editar el mesh. |
+| `Room Shape` | Empieza con Rectangle. L Left, L Right y T Shape añaden brazos. Random elige entre esas L/T; puede resolver Rectangle si un brazo no cabe. |
+| `Room Size` | X anchura, Y profundidad y Z altura interior, en cm. Usa múltiplos de tus tiles. |
+| `Randomize Room Size` | Apágalo mientras ajustas el arte; actívalo después para variar por seed. |
+| `Minimum / Maximum Room Size` | Rango del tamaño aleatorio. |
+| `Auto Detect Grid Step` | Detecta los incrementos desde las mallas. Manténlo activo para módulos regulares. |
+| `Manual Grid Step` | Incrementos X/Y/Z cuando desactivas la detección. |
+| `L Arm Size` / `T Arm Size` | Dimensiones de los brazos de L/T. También puedes configurarlos con Room Shape Random. |
 
-Si un mesh instanciado sale gris, abre su **material padre**, activa **Used with
-Instanced Static Meshes**, pulsa Apply y Save. Es un ajuste del material de
-Unreal; no necesitas forzar un `Material Override`.
+Para subir entre alturas utiliza [DBF Stairwell Room](09-procedural-stairwell.md).
+La subida real depende de la malla completa y `Stair Repeat Count`.
 
-## 03 Structure
+## 02 Surface Modules: arte de la sala
 
-Aquí están techo y pilares estructurales. Activa el techo solo si el arte lo
-necesita. Empieza los pilares en esquinas y aumenta la densidad poco a poco;
-decoración y antorchas respetan el espacio reservado por pilares.
+Asigna `Floor Module` y `Wall Module`. `Ceiling Module` se utiliza con
+`Generate Ceiling`; `Stair Module` pertenece a Stairwell.
 
-## 04 Connections
-
-| Opción | Uso |
+| Campo dentro de un módulo | Qué hace |
 |---|---|
-| `Snap Connections To Generated Walls` | Mantiene puertas en la pared real si cambia el tamaño. Déjalo activo. |
-| `Close Unused Connections` | Cierra huecos no usados por el generador. Déjalo activo. |
-| `Use Automatic Connections` | Crea puertas cardinales sin añadir Components manuales. |
-| `North`, `East`, `South`, `West` | Elige qué puertas automáticas existen. |
-| Tipo, tamaño y altura automáticos | Se aplican a esas puertas automáticas. |
+| `Mesh` | Malla que se repite. |
+| `Material Override` | Material para todos sus slots. Vacío conserva los materiales del asset. |
+| `Auto Orient Mesh` | Deduce la orientación desde las dimensiones. Desactívalo para orientar manualmente. |
+| `Rotation Offset` | Corrección de giro de una malla importada en otro eje. |
+| `Size Multiplier` | Multiplicador previo al teselado. Empieza con 1,1,1. |
+| `Position Offset` | Corrección local del pivote, en cm. |
 
-Usa Components manuales cuando una puerta deba estar en una posición artística
-especial. No pongas una puerta automática y otra manual en el mismo sitio.
+Si aparece material gris en HISM, comprueba **Used with Instanced Static
+Meshes** en el material padre, aplica y guarda. Revisa primero esa compatibilidad.
 
-## 05 Decorations
+`Ceiling Overhang` añade margen horizontal; `Ceiling Height Offset` desplaza
+verticalmente el techo. Un valor negativo lo baja.
 
-Activa `Enable Decorations`, escoge `Decoration Density` y añade reglas en
-`Decoration Rules`. Cada regla describe **un tipo de prop**, no una instancia
-colocada a mano.
+## 03 Structure: pilares y colisión
 
-### Controles de la sala
+Los pilares de L/T y los de Rectangle comparten tamaño, mesh y materiales,
+pero tienen interruptores propios. En Rectangle empieza con `Corners Only`;
+`Corners And Evenly Spaced` añade intermedios. `Target Pillar Spacing` controla
+la separación deseada. Las reglas decorativas y antorchas respetan su espacio.
 
-| Opción | Uso |
+`Pillar Material Override (All Slots)` se usa si la lista por slots está vacía.
+Para mallas con varios materiales utiliza la lista por slots; un elemento vacío
+conserva su original.
+
+`Enable Collision` activa consultas. `Enable Physics Collision` añade física.
+`Affect Navigation` permite participar en la NavMesh si la colisión está activa;
+todavía necesitas el NavMesh Bounds Volume del nivel y una prueba con tu IA.
+
+## 04 Connections: salidas
+
+Activa `Use Automatic Connections` para configurar las salidas cardinales
+desde North, East, South y West. Los grupos individuales muestran sus valores;
+los campos gobernados por el modo automático quedan de solo lectura.
+
+| Campo | Uso |
 |---|---|
-| `Decoration Density` | `Minimal` genera menos; `Standard` es normal; `Detailed` añade detalle visual. |
-| `Maximum Props Per Room` | Límite total de props. Empieza por 8–12. |
-| `Structural Pillar Clearance` | Espacio libre alrededor de pilares. Súbelo para props grandes. |
-| `Reserve Combat Area` / `Combat Area Radius` | Reserva el centro para combate. Recomendado en salas de pelea. |
-| `Placement Attempts Per Rule` | Límite de seguridad. Déjalo por defecto salvo que una regla no quepa repetidamente. |
+| `Snap Connections To Walls` | Mantiene las flechas alineadas con las paredes al variar el tamaño. |
+| `Close Unused Connections` | Cierra con pared las aberturas que no se usan. |
+| `Connection Type` | Tipo compatible; Passage y Door son equivalentes. |
+| `Opening Size` | Ancho y alto del hueco, en cm. |
+| `Opening Center Height` | Altura del centro del hueco sobre el suelo. Normalmente la mitad de su altura. |
+| `Already Has Door Frame` | El arte de esa salida ya tiene marco. El generador no añade otro en ese punto. |
 
-### Regla de decoración: orden para configurarla
+Para puertas artísticas, apaga las automáticas y usa componentes Connection
+manuales. Evita dos flechas en el mismo lugar. En el editor completo selecciona
+la flecha para mover su Transform; +X apunta hacia fuera.
 
-1. **Content**: asigna `Mesh`; deja `Material Override` vacío salvo que quieras
-   otro material de forma deliberada.
-2. **Placement**: elige `Placement Surface` (`Floor` o `Wall`).
-3. **Quantity**: `Minimum Instances`, `Maximum Instances` y `Selection Weight`.
-4. **Safety**: clearances para no bloquear pilares ni puertas.
-5. **Visual Adjustment**: escala, rotación o posición solo si el asset lo necesita.
+## 05 Decorations: props
 
-### Decoración de pared: banners, cuadros y apliques
+Activa `Enable Decorations` y añade una regla por tipo de prop en
+`Decoration Rules`. Define malla, superficie, reparto, cantidad y espacio libre.
+`Maximum Props Per Room` limita todas las reglas combinadas. Empieza con 8–12.
+`Minimal`, `Standard` y `Detailed` cambian la densidad.
 
-Para un banner, selecciona `Placement Surface = Wall` y empieza así:
+Para cajas o barriles usa `Placement Surface = Floor` y `Floor Placement Zone`
+Edges o Corners. `Reserve Combat Area` protege el centro; una regla puede
+permitirse entrar mediante `Can Use Combat Area`.
 
-| Opción | Valor inicial | Por qué |
-|---|---:|---|
-| `Wall Layout` | `Smart Centered (Recommended)` | Centra el item en su pared y prefiere paredes válidas no usadas antes de repetir. |
-| `Minimum Instances` / `Maximum Instances` | `1 / 1` | Un banner por regla. Sube el número solo tras mirar el preview. |
-| `Minimum Spacing` | `300 cm` | Evita que props de pared se amontonen. |
-| `Door Clearance` | `250 cm` | Mantiene las puertas claras. |
-| `Distance From Wall` | `5–10 cm` | Mete el mesh hacia la sala. Súbelo solo si entra en la pared. |
-| `Rotation Range` | `0 / 0` | Conserva la orientación del asset. Usa `180 / 180` solo si mira hacia la pared. |
-| `Position Adjustment` | `0, 0, 0` | Z sube/baja; los otros ejes son correcciones propias del asset. |
+Para un banner o cuadro prueba:
 
-`Smart Centered` es la opción normal: reparte props de pared por paredes válidas
-antes de reutilizar una y los centra visualmente. `Centered` también centra pero
-no prioriza una pared no usada. `Random (Legacy)` conserva el comportamiento
-antiguo aleatorio de bordes/esquinas.
-
-Para props de suelo, `Floor Placement Zone` elige el área. Usa `Edges` o
-`Corners` para cajas/barriles y deja `Center` para un prop focal único.
-
-## 06 Torches
-
-Las antorchas son Actors del proyecto que usa el plugin. Asigna el Blueprint
-propio en `Torch Actor Class`; el plugin no incluye tu arte de antorcha.
-
-| Opción | Uso |
+| Campo | Valor inicial de prueba |
 |---|---|
-| `Maximum Torches Per Room` | Empieza con 2 en una sala normal. |
-| `Preferred Wall Spacing` / `Torch Minimum Spacing` | Evitan antorchas cercanas. Más valor = más separación. |
-| `Height From Floor` | Sube o baja el anclaje de la antorcha. |
-| `Door Clearance` | Aleja fuego de las puertas. |
-| `Distance From Wall` | Mueve la antorcha hacia la sala. Súbelo si entra en pared. |
-| `Structural Pillar Clearance` | Evita que un pilar tape la antorcha. |
-| `Torch Forward Faces Room` | Déjalo activo si el eje +X del Blueprint mira de pared a sala. |
+| Placement Surface | Wall |
+| Wall Layout | Smart Centered (Recommended) |
+| Minimum / Maximum Instances | 1 / 1 |
+| Minimum Spacing | 300 cm |
+| Door Clearance | 250 cm |
+| Distance From Wall | 5–10 cm |
+| Rotation Range | 0 / 0; 180 / 180 si el asset mira hacia la pared |
 
-El generador usa paredes distintas antes de repetir una cuando hay paredes
-válidas suficientes. También descarta posiciones bloqueadas por pilares,
-conexiones u otra antorcha.
+Smart Centered centra el prop y prioriza paredes aún no usadas. Centered no
+prioriza paredes diferentes. Random Legacy conserva el reparto antiguo.
+Los mínimos son objetivos sujetos a que exista espacio seguro.
 
-Para rendimiento: radio de luz dentro de la sala, sombras apagadas y draw
-distance/fade para que luces lejanas dejen de renderizarse.
+## 06 Torches: actores del proyecto
 
-## 07 Room Fill Light
+Activa `Enable Procedural Torches`, asigna `Torch Actor Class` y empieza con
+dos antorchas. Configura altura, distancia de pared y separación. `Door
+Clearance` y `Structural Pillar Clearance` protegen puertas y pilares.
 
-Una Point Light opcional sin sombras que evita zonas completamente negras. Es
-luz de apoyo, no sustituye el tono cálido de las antorchas.
+Si +X del Blueprint apunta desde la pared hacia el interior, deja activo
+`Torch Forward Faces Room`. Los controles de radio, distancia de dibujado y
+fade están en **06 Torches → Performance**.
 
-| Opción | Uso |
-|---|---|
-| `Intensity` | Baja; súbela solo hasta leer siluetas. |
-| `Color` | Azul-gris suave para separarla de antorchas naranjas. |
-| `Height Below Ceiling` | Aumenta este valor para bajar la luz. |
-| `Local Offset` | X/Y la mueven desde el centro procedural; no cambia altura. |
-| Rendimiento | Atenuación dentro de sala y draw distance/fade para salas lejanas. |
+## 07 Room Fill Light: relleno
 
-## 08 Prueba con seed fija
+`Enable Room Fill Light` crea una Point Light sin sombras. Ajusta `Intensity`
+en lúmenes y `Color`. Para bajarla aumenta `Height Below Ceiling`; `Local
+Offset` solo cambia X/Y. Radio, dibujado y fade están en Performance.
 
-Este actor no expone un botón `Rebuild Preview`. Compila y guarda el Blueprint,
-asigna una `Preview Seed` al `DungeonBlueprintForgeGenerator` del nivel y pulsa
-`Generate Preview`. Con la misma seed puedes comparar: cambia un ajuste,
-regenera y decide si mantenerlo.
+`Isolate Room Local Lights From Player` usa canal de luz 1 para el relleno y
+las antorchas. La geometría generada recibe canales 0 y 1; un jugador por
+defecto en canal 0 no recibe esas luces locales.
 
-## Preset seguro inicial
+## 08 Preview: comprobar la sala
 
-Sala Rectangle, tamaño fijo, techo si tu arte lo necesita, conexiones automáticas,
-decoración `Standard`, máximo 8–12 props, un banner `Smart Centered`, dos
-antorchas y una fill light baja sin sombras. Añade detalle solo cuando eso se
-vea limpio.
+Compila el Blueprint, coloca una instancia y usa `Preview Seed` más `Rebuild
+Preview`. Repite una seed al comparar cambios. Comprueba primero geometría y
+puertas; añade props y luces después. Los componentes internos siguen en el
+árbol Components del editor completo, agrupados una sola vez en el panel.

@@ -25,8 +25,7 @@ Si tu geometría ya es un Packed Level Actor, crea un hijo de
 2. Configura `Room Size`, Shape y los módulos Floor/Wall/Ceiling.
 3. Usa conexiones manuales como arriba o activa `Use Automatic Connections`.
    Las automáticas se ajustan a la pared correcta tras cambiar la seed.
-4. Compila y guarda el Blueprint; después genera una seed fija desde un
-   `DungeonBlueprintForgeGenerator` del nivel para ver el resultado.
+4. Pulsa **Rebuild Preview** con una `Preview Seed` para ver el resultado.
 5. Crea una Room Definition que apunte a este Blueprint.
 
 Las propiedades de tamaño, pilares, decoración, antorchas y luz de relleno se

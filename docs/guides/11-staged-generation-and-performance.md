@@ -18,6 +18,10 @@ Para una partida aleatoria, crea un
 `Generate Dungeon Staged`. El wrapper separado `Generate Random Dungeon Staged`
 ya no forma parte de la API para evitar dos caminos equivalentes.
 
+La planificación sigue ejecutándose de forma síncrona. El presupuesto por
+frame se aplica a la presentación, y un elemento pesado puede superarlo.
+Cancelar conserva la seed y los diagnósticos; no conserva actors destruidos.
+
 ## Eventos
 
 Enlaza los eventos antes de llamar al nodo:
@@ -63,7 +67,7 @@ ser más útil `Slowest Staged Item` junto con los tiempos por fase.
 ## Validación actual
 
 El proyecto de laboratorio completó una barrida visual satisfactoria de 5 a 70
-Rooms el 2026-09-19. También se reforzó la auditoría tridimensional para que una
+Rooms el 2026-09-19 en el laboratorio anterior de UE 5.4. También se reforzó la auditoría tridimensional para que una
 Room de otra planta no invada el volumen vertical de un pasillo.
 El cleanup correspondiente completó UHT, compilación C++ y enlace de
 `DungeonLab54Editor Win64 Development` sin errores.
