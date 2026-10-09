@@ -2,7 +2,7 @@
 
 | Síntoma | Primera comprobación |
 |---|---|
-| El plugin no aparece | Debe estar en `TuProyecto/Plugins/DungeonBlueprintForge/`, con `.uplugin` y `Source/`, y compilado para UE 5.4. |
+| El plugin no aparece | Debe estar en `TuProyecto/Plugins/DungeonBlueprintForge/`, con `.uplugin` y `Source/`, y compilado para la versión de Unreal de ese proyecto. La copia 5.8 está en validación. |
 | No se genera nada | Revisa `Configuration`, `Last Result > Message` y `Resolved Seed`. |
 | Falta Start, Key o Boss | La lista necesita una Definition válida, habilitada y con categoría correcta. |
 | No hay pasillos | Asigna un `Corridor Style` válido con meshes. |
@@ -11,6 +11,8 @@
 | Una Packed Room no aparece como intermedia | Revisa `Category = Normal`, `Enabled`, `Selection Weight > 0`, la lista `Normal Rooms` y al menos dos salidas válidas. Conserva la seed y consulta la [guía Packed](12-prebuilt-packed-level-actor-rooms.md). |
 | «La habitación necesita al menos un componente Dungeon Blueprint Forge Bounds» en otra Packed Room | Comprueba que la `Room Class` del Data Asset apunta a su Blueprint contenedor. En una instancia de ese Blueprint, ejecuta `Rebuild Automatic Bounds`, confirma cajas azules, guarda el Blueprint y prueba `Validate Room And Log`. Cada Room necesita sus propios Bounds guardados. Consulta la [guía Packed](12-prebuilt-packed-level-actor-rooms.md). |
 | Una puerta de salida libre queda desplazada | Centra la flecha en el hueco y ajusta `Unused Exit Door Height/Forward/Right Offset` y `Scale` en Class Defaults del Blueprint Packed. Regenera con la misma seed. |
+| Una puerta Packed deja una franja superior o lateral | Comprueba `Detected Exit Opening Sizes`, activa `Auto Center Exits`, reconstruye y guarda el Blueprint. Usa `Fit Unused Exit Door To Opening = true` y `Unused Exit Door Scale = 1,1,1`; compara el vano objetivo y el tamaño de malla registrado en Output Log. Una silueta distinta puede requerir otro Actor o marco. |
+| `CookAll` de la copia 5.8 falla con `CR_Mannequin_Procedural` o `HeroAnin` | Revisa esos assets del proyecto host. `HeroAnin` informa que le falta Skeleton. Consulta el [estado de UE 5.8](../development/ue58-validation-2026-10-09.md); una compilación C++ correcta no resuelve errores de assets. |
 | Las cajas automáticas forman un rectángulo demasiado grande | Revisa `Bounds Mode = Automatic`, los valores de celda/margen y las mallas Packed; reconstruye en una instancia, comprueba las cajas azules y compila/guarda el Blueprint contenedor. |
 | Adaptive Floors no encuentra Stairwell | Añade una Definition válida a `Stairwell Room Definitions`, activa el debug de huella y comprueba conexiones libres, Bounds, rotaciones y dirección. |
 | La generación parece congelarse | Puede estar probando hasta `Maximum Generation Attempts` layouts. Conserva la seed, revisa `Last Result` y compara primero con menos Rooms o una huella mayor. |

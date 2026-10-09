@@ -35,6 +35,11 @@ con seed fija y marcos con `Direct Contact` staged. Siguen pendientes una build
 empaquetada en un proyecto limpio, NavMesh, tránsito, late join y mediciones
 en hardware objetivo. Una compilación Development no verifica esos puntos.
 
+La copia privada de UE 5.8.3 tiene un [estado de validación separado](ue58-validation-2026-10-09.md):
+compila el código y pasa el cook de paquetes referenciados, pero `CookAll`
+encuentra errores en dos assets del laboratorio. No sustituye las pruebas
+visuales y jugables pendientes de las puertas Packed.
+
 Consulta la [guía Packed](../guides/12-prebuilt-packed-level-actor-rooms.md)
 y la [lista de liberación](release-checklist.md) antes de llevar el plugin a
 un proyecto de producción.

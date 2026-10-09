@@ -22,6 +22,10 @@ que genera; `Clear Dungeon` borra solo lo que pertenece a ese Generator.
 
 Clase base para una sala construida a mano. `RoomRoot` es la raíz y `Allowed
 Rotations` limita los giros de 0/90/180/270 que puede probar el generador.
+La rama de desarrollo añade `GameplayAnchor`, una flecha movible cuyo
+`Gameplay Anchor World Transform` se incluye en cada elemento de `Result.Rooms`.
+El proyecto host puede usarlo para colocar un controlador de encuentro; los
+puntos concretos de spawn siguen en el Blueprint de ese controlador.
 
 - `Get Room Descriptor`: resumen de Bounds, Connections y Markers que usa el
   generador.
@@ -39,6 +43,10 @@ activa entre una y cuatro flechas; `Bounds Mode = Manual` usa cajas editadas
 por el autor y `Automatic` aproxima la geometría con hasta 16 cajas. En
 `Unused Exits`, la clase Blueprint de puerta cierra cada salida no conectada;
 Height, Forward y Right Offset y Scale ajustan el encaje por tipo de Room.
+En la rama de desarrollo, `Auto Center Exits` busca huecos desde las Static
+Mesh; `Detected Exit Opening Sizes` conserva sus medidas y `Fit Unused Exit Door
+To Opening` escala la puerta libre. `Automatic Bounds XY Inset` contrae las cajas
+calculadas. Hay que reconstruir, guardar y verificar visualmente cada Room.
 Consulta la [guía Packed](../guides/12-prebuilt-packed-level-actor-rooms.md).
 
 ## DungeonBlueprintForgeModularRoom

@@ -1,8 +1,10 @@
 # Dungeon Blueprint Forge
 
-> A Blueprint-friendly modular dungeon generator for Unreal Engine 5.4.
+> A Blueprint-friendly modular dungeon generator. Unreal Engine 5.4 is the
+> documented checkpoint; a separate Unreal Engine 5.8 development copy is under validation.
 
 ![Unreal Engine 5.4](https://img.shields.io/badge/Unreal%20Engine-5.4-0E1128?logo=unrealengine&logoColor=white)
+![Unreal Engine 5.8](https://img.shields.io/badge/Unreal%20Engine-5.8%20validation-orange?logo=unrealengine&logoColor=white)
 ![Documentation](https://img.shields.io/badge/Repository-Documentation%20Only-5B3CC4)
 ![Status](https://img.shields.io/badge/Status-0.10.1%20Checkpoint-2EA44F)
 
@@ -22,6 +24,10 @@ repository contains guides and images, not an installable plugin. Start with
 the [validation status](docs/development/validation-status-2026-09-26.md) lists
 features that still need testing before production use. The step-by-step guides
 are in Spanish.
+
+The separate UE 5.8.3 copy has passed C++ builds and a referenced-package cook,
+but full asset cooking and visual acceptance remain open. See the
+[UE 5.8 migration status](docs/development/ue58-validation-2026-10-09.md).
 
 ## What problem does it solve?
 
@@ -87,6 +93,7 @@ assigned from the Unreal Details panel.
 | Understand every Data Asset | [Data Asset reference](docs/reference/data-assets.md) |
 | Understand Generator, Room and Component options | [Actor and Component reference](docs/reference/actors-and-components.md) |
 | Check what has been validated | [Validation status](docs/development/validation-status-2026-09-26.md) |
+| Follow the Unreal 5.8 migration | [UE 5.8 validation status](docs/development/ue58-validation-2026-10-09.md) |
 
 ## Main workflow
 
@@ -123,7 +130,7 @@ Dungeon Blueprint Forge uses straight horizontal corridors. Vertical travel is
 handled inside `DBF Stairwell Room`; curved/L-shaped corridors and room loops
 are outside the current scope. The 0.10.1 checkpoint compiles in Unreal 5.4.
 Adaptive Floors and Packed Rooms are documented as development work on the private plugin branch.
-The laboratory completed a visual sweep from 5 to 70 Rooms on 2026-09-19;
+The laboratory completed a visual sweep from 5 to 70 Rooms on 2026-09-19 in 5.4;
 NavMesh, Lumen, networking and low-end hardware acceptance remain part of each
 project's QA.
 

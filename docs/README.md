@@ -26,9 +26,9 @@ conexiones para layouts compactos. El laboratorio completó una barrida visual
 de 5 a 70 Rooms; NavMesh, red y hardware modesto siguen requiriendo
 pruebas dedicadas.
 
-Packed Rooms con `Automatic Bounds` y puertas de salidas libres ya se probaron
-visualmente en el laboratorio. El ajuste de escala/desplazamiento completo,
-las nuevas variantes y una build empaquetada aún necesitan prueba manual.
+Packed Rooms con `Automatic Bounds` se probaron visualmente en el laboratorio
+5.4. El ajuste de escala/desplazamiento completo de puertas y la copia de UE
+5.8 aún necesitan prueba visual y una build empaquetada.
 
 ## Referencia
 
@@ -39,6 +39,7 @@ las nuevas variantes y una build empaquetada aún necesitan prueba manual.
 
 - [Lista de liberación](development/release-checklist.md)
 - [Estado de validación del 2026-09-26](development/validation-status-2026-09-26.md)
+- [Migración a UE 5.8: comprobado y pendiente](development/ue58-validation-2026-10-09.md)
 
 ## Alcance público
 

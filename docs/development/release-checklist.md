@@ -6,6 +6,9 @@ publica ni hace push por sí sola.
 ## Código y calidad
 
 - [x] Builds `DungeonLab54Editor` y `DungeonLab54` Win64 Development de UE 5.4 terminan correctamente tras la última corrección C++ (2026-09-27).
+- [x] La copia privada de UE 5.8.3 compila Editor, Game Development y `BuildPlugin` Win64 (2026-10-09).
+- [ ] Resolver el `CookAll` de UE 5.8 y repetirlo sin errores; revisar `CR_Mannequin_Procedural`, `HeroAnin` y los avisos UDIM del laboratorio.
+- [ ] Abrir la copia UE 5.8 en el editor y probar una seed fija, Packed Rooms y el encaje visual de puertas.
 - [ ] No hay warnings nuevos relevantes ni código temporal de depuración.
 - [ ] `git diff --check` pasa.
 - [ ] Todos los cambios funcionales tienen una prueba manual asociada.
