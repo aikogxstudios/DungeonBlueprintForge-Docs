@@ -1,13 +1,13 @@
 # Comprobaciones antes de distribuir — UE 5.8
 
 Esta lista corresponde al plugin actual para UE 5.8.3. Los resultados
-fechados de UE 5.4 son históricos. Consulta [la revisión actual](maintenance-review-2026-10-09.md).
+fechados de UE 5.4 son históricos. Consulta [la revisión actual](final-review-2026-10-25.md).
 
 ## Verificación técnica
 
 - [x] Editor y Game Win64 Development compilan en UE 5.8.3.
-- [x] Automation DungeonBlueprintForge: 4 pruebas, sin fallos.
-- [x] BuildPlugin final validado para Editor, Game Development y Game Shipping.
+- [x] Automation DungeonBlueprintForge: 15 pruebas, sin fallos.
+- [x] BuildPlugin del 2026-10-25: Editor, Game Development y Game Shipping correctos.
 - [ ] Confirmar panel reorganizado, opciones existentes y una seed conocida en Unreal.
 - [ ] Verificar reemplazo de geometría Packed y detección fallida de sus aberturas.
 - [ ] Probar cancelación Staged y diagnóstico de seed.
@@ -21,7 +21,7 @@ fechados de UE 5.4 son históricos. Consulta [la revisión actual](maintenance-r
 - [ ] Probar una build empaquetada del host, incluida geometría Packed.
 - [ ] Instalar el paquete privado en un proyecto limpio UE 5.8 y seguir la guía.
 - [x] Los targets Game de BuildPlugin excluyen el módulo Editor.
-- [ ] Revisar redirecciones, EngineVersion y archivos incluidos en el paquete.
+- [x] Descriptor, configuración y código incluidos en el paquete Win64 revisados.
 
 ## Documentación y GitHub
 

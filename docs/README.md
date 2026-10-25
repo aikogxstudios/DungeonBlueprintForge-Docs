@@ -20,6 +20,9 @@ Si solo necesitas entender una opción, consulta [el catálogo completo en espa�
 
 ## Referencia y resultados
 
+- [Versión y estado actual](development/current-status.md)
+- [Revisión final del 2026-10-25](development/final-review-2026-10-25.md)
+
 - [225 opciones del editor](reference/editor-options.md)
 - [Data Assets](reference/data-assets.md)
 - [Actors y componentes](reference/actors-and-components.md)

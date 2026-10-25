@@ -48,14 +48,15 @@ opciones de Gameplay Zone comunican metadatos; no crean un sistema de combate.
 
 ## Estado y alcance
 
-La versión del plugin se conserva en 0.10.1 mientras se revisa su aceptación.
-El límite actual es 69 salas normales y 75 salas totales. La seed reproduce
-el resultado si mantienes assets y configuración; no garantiza que cualquier
-combinación de rooms quepa.
+La versión sigue siendo **0.10.1 (interna 12)** para UE **5.8.3**. La base de
+empalmes fue confirmada en el laboratorio. Editor y Game Development compilan;
+las **15 pruebas automáticas pasan**. La aceptación visual de las últimas
+optimizaciones y la integración en el host siguen pendientes.
 
-Los resultados de compilación y pruebas están en [la revisión de mantenimiento](docs/development/maintenance-review-2026-10-09.md).
-La comprobación visual del nuevo panel, red, NavMesh y empaquetado completo
-tienen pruebas propias. El CookAll anterior conserva errores de dos assets del
-laboratorio descritos en [el estado de UE 5.8](docs/development/ue58-validation-2026-10-09.md).
+Consulta el [estado actual](docs/development/current-status.md) y la
+[revisión del 2026-10-25](docs/development/final-review-2026-10-25.md).
+El límite actual es 69 salas normales y 75 totales; la seed necesita la misma
+configuración y assets. Staged reparte la presentación, no toda la planificación.
+El respaldo privado de mantenimiento no es una certificación de producción.
 
 [AikoGx Studios](https://aikogxstudios.itch.io/)

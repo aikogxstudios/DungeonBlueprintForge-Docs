@@ -2,7 +2,7 @@
 
 | Síntoma | Primera comprobación |
 |---|---|
-| El plugin no aparece | Debe estar en `TuProyecto/Plugins/DungeonBlueprintForge/`, con `.uplugin` y `Source/`, y compilado para la versión de Unreal de ese proyecto. La copia 5.8 está en validación. |
+| El plugin no aparece | Debe estar en `TuProyecto/Plugins/DungeonBlueprintForge/`, con `.uplugin` y `Source/`, y compilado para la versión de Unreal de ese proyecto. Consulta el estado de validación actual antes de integrarlo. |
 | No se genera nada | Revisa `Configuration`, `Last Result > Message` y `Resolved Seed`. |
 | Falta Start, Key o Boss | La lista necesita una Definition válida, habilitada y con categoría correcta. |
 | No hay pasillos | Asigna un `Corridor Style` válido con meshes. |
@@ -49,3 +49,12 @@ como rutas lógicas sin Actor ni HISM temporal. Tras aceptar el layout se crean
 una sola vez y se valida su bound real contra la huella.
 
 Para generación durante gameplay consulta [Generación staged y rendimiento](11-staged-generation-and-performance.md).
+
+## Rendijas y desniveles en conexiones Packed/procedurales
+
+Ejecuta `Rebuild Automatic Bounds` con `Auto Center Exits` activo en la Room
+afectada y guarda su Blueprint. El cálculo actual considera el umbral y el
+borde real del suelo. Repite la misma seed. Si persiste, conserva la seed,
+clases de ambas Rooms, Corridor Style y vistas superior/lateral del empalme.
+No atribuyas automáticamente el fallo al pasillo ni a un pequeño hueco entre
+paredes sin comprobar los conectores guardados.

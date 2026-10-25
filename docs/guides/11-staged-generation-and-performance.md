@@ -83,3 +83,18 @@ Las Rooms prehechas utilizan un Blueprint hijo de
 ligeras; runtime precarga su clase Packed y la crea dentro del presupuesto
 staged. Consulta
 [Rooms prehechas con Packed Level Actor](12-prebuilt-packed-level-actor-rooms.md).
+
+## Mantenimiento de octubre de 2026
+
+La caché de bounds evita repetir transformaciones de cajas de salas ya colocadas
+sin cambiar su cálculo de solapes. La comparación conservada de 12 ejecuciones
+mantuvo las mismas distribuciones; los tiempos de editor NullRHI no equivalen
+a FPS del juego. Los casos grandes con muchos reintentos todavía necesitan
+perfilado en el host.
+
+Una generación normal sustituye una Staged pendiente. Se reinician los estados
+al repetir Staged y se limpian actores y callbacks al destruir el generador.
+Si se pierde `Configuration` durante precarga o presentación, la petición debe
+terminar con fallo en lugar de permanecer activa. Evita cambiar la configuración
+o iniciar otras peticiones desde eventos de progreso; la reentrancia completa
+mantiene una validación independiente.

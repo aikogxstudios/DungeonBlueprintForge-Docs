@@ -134,3 +134,21 @@ Si las cajas son visibles en la instancia pero el generador sigue dando el
 mismo error, conserva capturas de `Room Class`, los componentes del Blueprint,
 el resultado de validación y `Resolved Seed`: puede haber una diferencia entre
 la instancia visible y los Bounds guardados que usa la candidata.
+
+## Actualizar Bounds y empalmes después de cambiar el arte
+
+Con `Auto Center Exits` activo, `Rebuild Automatic Bounds` también recalcula
+las flechas y el umbral sobre el borde real del suelo. Ejecuta el botón en una
+instancia del Blueprint contenedor, revisa las cajas y salidas, compila y guarda
+el Blueprint antes de regenerar con la misma seed. Repite el proceso para cada
+Room cuyo arte haya cambiado.
+
+El generador alinea el umbral de suelo usando la altura de paso común de ambas
+salidas. No compenses una rendija moviendo todo el suelo sin comprobar antes
+el borde detectado y los Bounds guardados. Una salida válida debe estar en el
+borde de su volumen y su eje +X debe apuntar hacia fuera.
+
+La detección automática aproxima aberturas a partir de las mallas. Revisa cada
+resultado: geometría ambigua, decoración y superficies separadas pueden requerir
+ajustar la configuración o autoría. No es necesario que todas las paredes sean
+una única malla.

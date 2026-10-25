@@ -4,6 +4,25 @@ La luz se configura en el `Dungeon Blueprint Forge Corridor Style` que ya usas
 para suelo, paredes y techo. Los marcos se configuran aparte, desde el
 `Generation Config`, para cubrir todas las puertas finales de la mazmorra.
 
+## Altura del suelo en conexiones mixtas
+
+El generador alinea los umbrales de suelo de las Rooms, en lugar de igualar
+centros de flechas que pueden representar puertas de distinta altura. El
+pasillo usa la menor altura libre de ambos extremos y mantiene su suelo sobre
+ese umbral común. Se aplica a la cadena principal, las ramas y Direct Contact;
+la presentación normal y Staged comparten las mismas rutas calculadas.
+
+En una sala procedural plana, el suelo de referencia incluye `Floor Module →
+Position Offset Z`. En Stairwell se conserva el desnivel de los descansillos.
+En Packed se utiliza el umbral representado por la flecha: su centro menos la
+mitad de `Opening Size Y`; con Auto Center Exits procede de la detección guardada.
+Si la detección del umbral es incorrecta o aproximada, todavía hay que revisarla.
+
+`Floor Alignment → Position Offset Z` del pasillo sigue siendo un ajuste visual
+explícito: un valor distinto de cero puede volver a separar las superficies.
+La alineación vertical no corrige separaciones horizontales ni mallas cuyo
+suelo visible no alcance sus bounds. No cambia automáticamente tus assets.
+
 ## Luz procedural de pasillo
 
 Activa `Enable Corridor Fill Lights` en la categoría **Corridor Lighting**.
